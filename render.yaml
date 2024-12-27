@@ -1,6 +1,6 @@
 databases:
   - name: Rails-65
-    databaseName: Rails-65
+    databaseName: mysite
     user: Rails-65
     plan: free
 
@@ -15,7 +15,7 @@ services:
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: Rails-65
+          name: mysite
           property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false
