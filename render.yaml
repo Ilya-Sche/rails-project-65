@@ -1,7 +1,7 @@
 databases:
   - name: Rails-65
     databaseName: mysite
-    user: Rails-65
+    user: mysite
     plan: free
 
 services:
