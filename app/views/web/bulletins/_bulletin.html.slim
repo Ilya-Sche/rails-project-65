@@ -1,0 +1,28 @@
+h1.text-center.display-3.text-body-emphasis
+  = bulletin.title
+
+#dom_id(bulletin)
+  .row
+    .col-12
+      p.text-muted{style: font-size: 0.9rem;}
+      strong = "#{t('bulletin.description')} :"
+      = bulletin.description
+
+  .row
+    .col-12.d-flex.justify-content-between
+      .text-muted{style: font-size: 0.8rem;}
+        strong = "#{t('bulletin.author')} :"
+        = bulletin.user.email
+
+  .row
+    .col-12.d-flex.justify-content-between
+      .text-muted{style: font-size: 0.8rem;}
+        strong = "#{t('status')} :"
+        = bulletin.state
+
+  p
+  - if bulletin.images.attached?
+    - bulletin.images.each do |image|
+      = image_tag image, alt: 'Bulletin Image', class: 'img-fluid'
+  - else
+      strong = t('bulletin.no_images')

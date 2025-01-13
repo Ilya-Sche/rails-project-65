@@ -1,0 +1,10 @@
+h1 = t('category.categories')
+
+.categories
+  - @categories.each do |category|
+    .category-item
+      = render category
+      p.text-left
+        = link_to t('category.show'), category, class: 'btn btn-primary btn-lg'
+
+= link_to t('category.new'), new_category_path, class: 'btn btn-success btn-lg'

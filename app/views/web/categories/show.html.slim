@@ -1,0 +1,13 @@
+= render 'category', category: @category
+
+- if @category.bulletins.any?
+  ul.list-group
+    - @category.bulletins.each do |bulletin|
+      li.list-group-item
+        = link_to bulletin.title, bulletin_path(bulletin), class: 'text-decoration-none h5'
+
+.mt-3
+  = link_to t('category.back'), categories_path, class: 'btn btn-primary btn-lg'
+
+.mt-3
+  = link_to t('bulletin.create'), new_bulletin_path, class: 'btn btn-success btn-lg'

@@ -1,0 +1,16 @@
+en:
+  activerecord:
+    models:
+      bulletin: "Bulletin"
+      category: "Category"
+
+
+  flash:
+    create: "%{model} was successfully created."
+    update: "%{model} was successfully updated."
+    destroy: "%{model} was successfully destroyed."
+    moderate: "%{model} was sent to moderation."
+    reject: "%{model} was rejected."
+    archive: "%{model} was successfully archieved."
+    publish: "%{model} was successfully published."
+    error: "Error"

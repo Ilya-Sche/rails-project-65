@@ -1,0 +1,30 @@
+h1 Просмотр объявления
+
+p
+  strong = "#{t('bulletin.title')} :"
+  = @bulletin.title
+
+p
+  strong = "#{t('bulletin.description')} :"
+  = @bulletin.description
+
+p
+  strong = "#{t('bulletin.category')} :"
+  = @bulletin.category.name
+
+p
+  strong = "#{t('bulletin.images')} :"
+
+  - if @bulletin.images.attached?
+    - @bulletin.images.each do |image|
+      = image_tag image, alt: 'Bulletin Image', class: 'img-fluid', style: 'max-width: 600px;'
+  - else
+    strong = "#{t('bulletin.no_images')} :"
+
+p
+  strong Статус:
+  = @bulletin.state.humanize
+
+= link_to t('bulletin.edit'), edit_admin_bulletin_path(@bulletin), class: 'btn btn-warning'
+p
+= link_to t('bulletin.back'), admin_bulletins_path, class: 'btn btn-secondary'

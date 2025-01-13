@@ -1,0 +1,44 @@
+doctype html
+html
+  head
+    title = content_for(:title) || 'Rails Project 65'
+    meta[name='viewport' content='width=device-width,initial-scale=1']
+    meta[name='apple-mobile-web-app-capable' content='yes']
+    = csrf_meta_tags
+    = csp_meta_tag
+    = yield :head
+    link[rel='manifest' href='/manifest.json']
+    link[rel='icon' href='/icon.png' type='image/png']
+    link[rel='icon' href='/icon.svg' type='image/svg+xml']
+    link[rel='apple-touch-icon' href='/icon.png']
+    = stylesheet_link_tag 'application', 'data-turbo-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbo-track': 'reload', type: 'module'
+
+  body
+    - flash.each do |key, message|
+      - if key == 'notice'
+        .alert.alert-success.border-success
+          = message
+      - elsif key == 'alert'
+        .alert.alert-danger.border-danger.role = alert
+          = message
+
+  nav.navbar.navbar-expand-lg.navbar-light.bg-light
+    .container-fluid
+      = link_to root_path, class: 'navbar-brand' do
+        | Домой
+      button.navbar-toggler[type='button' data-bs-toggle='collapse' data-bs-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Переключить навигацию']
+        span.navbar-toggler-icon
+
+      #navbarNav.collapse.navbar-collapse
+        ul.navbar-nav.ms-auto
+          - if current_user
+            li.nav-item
+              = link_to 'Выход', logout_path, method: :delete, class: 'nav-link'
+          - else
+            li.nav-item
+              = link_to 'Вход', new_user_path, class: 'nav-link'
+            li.nav-item
+              = link_to 'Регистрация', new_user_path, class: 'nav-link'
+
+    = yield

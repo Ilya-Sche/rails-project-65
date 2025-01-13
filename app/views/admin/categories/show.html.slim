@@ -1,0 +1,10 @@
+= render 'admin/categories/category', category: @category
+
+- if @category.bulletins.any?
+  ul.list-group
+    - @category.bulletins.each do |bulletin|
+      li.list-group-item
+        = link_to bulletin.title, admin_bulletin_path(bulletin), class: 'text-decoration-none h5'
+
+.mt-3
+  = link_to t('category.back'), admin_categories_path, class: 'btn btn-primary btn-lg'

@@ -1,0 +1,22 @@
+h2 class="text-center" = t('bulletin.on_moderation')
+p
+|
+|
+.row
+  .col-md-4
+    .font-weight-bold Title
+  .col-md-4
+    .font-weight-bold Created at
+  .col-md-4
+    .font-weight-bold Actions
+
+- @bulletins.each do |bulletin|
+  .row.mb-3
+    .col-md-4
+      = link_to bulletin.title, bulletin_path(bulletin), class: 'text-primary'
+    .col-md-4
+      small.text-muted = "#{time_ago_in_words(bulletin.created_at)} ago"
+    .col-md-4
+      = link_to t('button.publish'), publish_admin_bulletin_path(bulletin), method: :put, class: 'btn btn-success btn-sm'
+      = link_to t('button.reject'), reject_admin_bulletin_path(bulletin), method: :put, class: 'btn btn-danger btn-sm'
+      = link_to t('button.archive'), archive_admin_bulletin_path(bulletin), method: :put, class: 'btn btn-secondary btn-sm'

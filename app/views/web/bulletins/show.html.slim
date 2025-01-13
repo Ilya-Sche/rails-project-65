@@ -1,0 +1,11 @@
+= render 'bulletin', bulletin: @bulletin
+
+div
+  - if @bulletin.user == current_user
+    = link_to t('bulletin.edit'), edit_bulletin_path(@bulletin), class: 'btn btn-primary mt-3'
+    p
+    = link_to t('bulletin.back'), bulletins_path, class: 'btn btn-primary mt-3'
+    p
+    = button_to t('bulletin.destroy'), @bulletin, method: :delete, data: { confirm: t('destroy.confirm') }, class: 'btn btn-danger'
+  - else
+    = link_to t('bulletin.back'), bulletins_path, class: 'btn btn-primary mt-3'

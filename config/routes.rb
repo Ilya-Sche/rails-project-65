@@ -1,14 +1,45 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  root 'web/bulletins#index'
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  scope module: 'web' do
+    post 'auth/:provider', to: 'auth#request', as: :auth_request
+    get 'auth/:provider/callback', to: 'auth#callback', as: :callback_auth
+    get '/logout', to: 'auth#destroy', as: 'logout'
+  end
 
-  # Render dynamic PWA files from app/views/pwa/*
-  get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-  get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
+  get 'up' => 'rails/health#show', as: :rails_health_check
+  get 'profile', to: 'user#show'
+  get 'admin', to: 'admin/bulletins#admin'
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  get 'service-worker' => 'rails/pwa#service_worker', as: :pwa_service_worker
+  get 'manifest' => 'rails/pwa#manifest', as: :pwa_manifest
+
+  scope :web do
+    resources :categories, controller: 'web/categories'
+    resources :bulletins, controller: 'web/bulletins' do
+      member do
+        post :send_for_moderation
+        post :archive
+      end
+    end
+  end
+
+  resources :users, controller: 'user'
+
+  namespace :admin do
+    resources :categories
+    resources :bulletins do
+      member do
+        post :send_for_moderation
+        post :publish
+        post :reject
+        post :archive
+      end
+      collection do
+        get 'moderation'
+      end
+    end
+  end
 end

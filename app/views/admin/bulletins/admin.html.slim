@@ -1,0 +1,9 @@
+.row
+  .col-md-3
+    .btn-group-vertical
+    p
+      = link_to t('bulletin.on_moderation'), moderation_admin_bulletins_path, class: 'btn btn-primary'
+    p
+      = link_to t('bulletin.bulletins'), admin_bulletins_path, class: 'btn btn-primary'
+    p
+      = link_to t('category.categories'), admin_categories_path, class: 'btn btn-primary'
