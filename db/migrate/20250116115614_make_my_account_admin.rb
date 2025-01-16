@@ -1,5 +1,5 @@
 class MakeMyAccountAdmin < ActiveRecord::Migration[7.2]
   def change
-    User.find_by(email: "123@mail.ru").update(admin: true)
+    User.find_by(email: "ilya_sche@mailfence.com").update(admin: true)
   end
 end
