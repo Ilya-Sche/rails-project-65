@@ -42,18 +42,9 @@ class Web::Admin::BulletinsController < ApplicationController
     redirect_to admin_bulletins_path, notice: I18n.t('flash.destroy', model: @bulletin.class.name)
   end
 
-  def send_for_moderation
-    @bulletin = Bulletin.find(params[:id])
-    if @bulletin.send_for_moderation!(state: :under_moderation)
-      redirect_to admin_bulletins_path, notice: I18n.t('flash.moderate', model: @bulletin.class.name)
-    else
-      redirect_to admin_bulletins_path, alert: I18n.t('flash.error')
-    end
-  end
-
   def publish
     @bulletin = Bulletin.find(params[:id])
-    if @bulletin.publish!(state: :published)
+    if @bulletin.publish!
       redirect_to admin_bulletins_path, notice: I18n.t('flash.publish', model: @bulletin.class.name)
     else
       redirect_to admin_bulletins_path, alert: I18n.t('flash.error')

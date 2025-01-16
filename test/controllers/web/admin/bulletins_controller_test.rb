@@ -53,13 +53,6 @@ class Web::Admin::BulletinsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to admin_bulletins_path
   end
 
-  test 'should send bulletin for moderation' do
-    post send_for_moderation_admin_bulletin_path(@bulletin)
-    @bulletin.reload
-    assert_equal 'under_moderation', @bulletin.state
-    assert_redirected_to admin_bulletins_path
-  end
-
   test 'should publish bulletin' do
     post publish_admin_bulletin_path(@bulletin_two)
     @bulletin_two.reload
