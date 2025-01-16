@@ -15,6 +15,16 @@ class Web::Admin::CategoriesController < ApplicationController
     @category = Category.find(params[:id])
   end
 
+  def create
+    @category = Category.new(category_params)
+
+    if @category.save
+      redirect_to categories_path, notice: I18n.t('category.created')
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
   def update
     @category = Category.find(params[:id])
     if @category.update(category_params)

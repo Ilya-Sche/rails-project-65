@@ -20,6 +20,13 @@ class Web::Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'should create category' do
+    assert_difference('Category.count', 1) do
+      post admin_categories_path, params: { category: { name: 'New Category' } }
+    end
+    assert_redirected_to admin_categories_path
+  end
+
   test 'should get edit' do
     get edit_admin_category_path(@category)
     assert_response :success
