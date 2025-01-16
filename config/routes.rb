@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
   resources :users, controller: 'user'
 
-  scope module: 'web'  do
+  scope module: 'web' do
     namespace :admin do
       resources :categories
       resources :bulletins do

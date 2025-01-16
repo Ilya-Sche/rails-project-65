@@ -35,8 +35,8 @@ gem 'kaminari'
 gem 'pundit'
 gem 'ransack'
 gem 'simple_form'
-gem 'slim-rails'
 gem 'slim_lint'
+gem 'slim-rails'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[windows jruby]
 

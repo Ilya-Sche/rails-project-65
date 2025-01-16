@@ -6,12 +6,7 @@ class Web::BulletinsController < Web::ApplicationController
   def index
     @bulletins = Bulletin.includes(:category, :user).where(state: :published).order(created_at: :desc)
     @q = Bulletin.ransack(params[:q])
-
     @bulletins = @q.result(distinct: true).page(params[:page]).per(10)
-  end
-
-  def profile
-    @bulletins = current_user.bulletins
   end
 
   def show
