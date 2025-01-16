@@ -37,7 +37,7 @@ html
             = link_to t('user.logout'), logout_path, method: :delete, class: 'navbar-brand text-primary text-decoration-none'
             .ms-auto.d-flex.align-items-center
               .navbar-text.text-primary.font-weight-bold.fs-4
-                = session[:user_email]
+                = current_user.email
           - else
             = button_to t('user.login'), auth_request_path('github'), data: { turbo: false }, method: :post, class: 'navbar-brand text-primary text-decoration-none'
 

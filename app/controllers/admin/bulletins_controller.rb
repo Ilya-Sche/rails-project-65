@@ -32,7 +32,7 @@ class Admin::BulletinsController < ApplicationController
     if @bulletin.update(bulletin_params)
       redirect_to admin_bulletins_path, notice: I18n.t('flash.update', model: @bulletin.class.name)
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -43,7 +43,7 @@ class Admin::BulletinsController < ApplicationController
   end
 
   def send_for_moderation
-    @bulletin = current_user.bulletins.find(params[:id])
+    @bulletin = Bulletin.find(params[:id])
     if @bulletin.send_for_moderation!(state: :under_moderation)
       redirect_to admin_bulletins_path, notice: I18n.t('flash.moderate', model: @bulletin.class.name)
     else
@@ -71,7 +71,7 @@ class Admin::BulletinsController < ApplicationController
 
   def archive
     @bulletin = Bulletin.find(params[:id])
-    if @bulletin.archive!(state: :archieved)
+    if @bulletin.archive!(state: :archived)
       redirect_to admin_bulletins_path, notice: I18n.t('flash.archive', model: @bulletin.class.name)
     else
       redirect_to admin_bulletins_path, alert: I18n.t('flash.error')

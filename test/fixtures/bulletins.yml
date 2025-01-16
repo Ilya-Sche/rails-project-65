@@ -13,3 +13,4 @@ two:
   image: MyString
   category: two
   user: two
+  state: under_moderation

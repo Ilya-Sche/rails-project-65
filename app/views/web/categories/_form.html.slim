@@ -1,8 +1,8 @@
 = form_with(model: category, local: true) do |form|
 
   .form-group
-    = form.label :name, 'Название категории'
-    = form.text_field :name, class: 'form-control', placeholder: 'Введите название категории'
+    = form.label :name, t('category.name')
+    = form.text_field :name, class: 'form-control', placeholder: t('category.name')
 
   .form-group
-    = form.submit category.new_record? ? 'Создать категорию' : 'Обновить категорию', class: 'btn btn-primary'
+    = form.submit category.new_record? ? t('category.create') : t('category.update'), class: 'btn btn-primary'

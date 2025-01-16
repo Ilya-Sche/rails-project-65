@@ -14,3 +14,4 @@ en:
     archive: "%{model} was successfully archieved."
     publish: "%{model} was successfully published."
     error: "Error"
+    empty: "All neccessary fields should be filled!"

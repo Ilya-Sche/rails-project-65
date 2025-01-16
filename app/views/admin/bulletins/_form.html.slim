@@ -19,7 +19,7 @@
       - bulletin.images.each_with_index do |image, index|
         .form-check
           = check_box_tag 'bulletin[image_ids_to_delete][]', image.id, false, class: 'form-check-input'
-          = label_tag "bulletin_image_#{index}_delete", "Удалить изображение #{index + 1}", class: 'form-check-label'
+          = label_tag "bulletin_image_#{index}_delete", t('bulletins.delete_images', index: index + 1), class: 'form-check-label'
           = image_tag image, alt: 'Bulletin Image', class: 'img-fluid', style: 'max-width: 200px;'
 
   .form-actions

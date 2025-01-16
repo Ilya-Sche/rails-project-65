@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class Web::BulletinsController < ApplicationController
-  before_action :authenticate_user!, only: %i[new create update destroy send_for_moderation archive]
+class Web::BulletinsController < Web::ApplicationController
+  before_action :authenticate_user!, except: %i[index show]
 
   def index
     @bulletins = Bulletin.includes(:category, :user).where(state: :published).order(created_at: :desc)
@@ -53,8 +53,8 @@ class Web::BulletinsController < ApplicationController
   end
 
   def send_for_moderation
-    @bulletin = current_user.bulletins.find(params[:id])
-    if @bulletin.send_for_moderation!
+    @bulletin = Bulletin.find(params[:id])
+    if @bulletin.send_for_moderation!(state: :under_moderation)
       redirect_to profile_path, notice: I18n.t('flash.moderate', model: @bulletin.class.name)
     else
       redirect_to profile_path, alert: I18n.t('flash.error')
@@ -62,8 +62,8 @@ class Web::BulletinsController < ApplicationController
   end
 
   def archive
-    @bulletin = current_user.bulletins.find(params[:id])
-    if @bulletin.archive!
+    @bulletin = Bulletin.find(params[:id])
+    if @bulletin.archive!(state: :archived)
       redirect_to profile_path, notice: I18n.t('flash.archive', model: @bulletin.class.name)
     else
       redirect_to profile_path, alert: I18n.t('flash.error')

@@ -49,6 +49,7 @@ en:
     updated: "Category updated!"
     destroyed: "Category destroyed!"
     name: "Category name"
+    update: "Update category"
   bulletin:
     bulletins: "Bulletins"
     editing: "Editing bulletin"
@@ -76,6 +77,7 @@ en:
     category: "Bulletin category"
     on_moderation: "Bulletins on moderation"
     name: "Bulletin name"
+    delete_images: "Delete images"
   destroy:
     confirm: "Are you sure?"
   user:
@@ -92,7 +94,7 @@ en:
     auth: "You shoud authorize first!"
     admin: "Admin"
     entered: "You have benn successfully logged in!"
-    looged_out: "You have been successfully logged out!"
+    logged_out: "You have been successfully logged out!"
   admin:
     not_auth: "You are not perfformed for this action!"
   button: 

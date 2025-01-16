@@ -2,19 +2,12 @@
 
 class UserController < ApplicationController
   before_action :authenticate_user!, only: [:show]
-  def index
-    @users = User.all
-  end
 
   def show
     authenticate_user!
     @bulletins = current_user.bulletins
     @q = Bulletin.ransack(params[:q])
     @bulletins = @q.result(distinct: true).page(params[:page])
-  end
-
-  def new
-    @user = User.new
   end
 
   def create

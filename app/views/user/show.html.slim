@@ -20,7 +20,7 @@ h1 = t('bulletin.bulletins')
             .form-group.mt-md-4
               = link_to t('search.reset'), bulletins_path, class: 'btn btn-secondary mt-4 mt-md-0'
 
-- if @bulletins.empty?
+- if current_user.bulletins.empty?
   p = t('bulletin.empty')
 
 table.table
@@ -30,7 +30,7 @@ table.table
       th = t('bulletin.state')
       th = t('bulletin.actions')
   tbody
-    - @bulletins.each do |bulletin|
+    - current_user.bulletins.each do |bulletin|
       tr
         td = link_to bulletin.title, bulletin_path(bulletin)
         td = bulletin.state.humanize
@@ -45,7 +45,6 @@ table.table
             = button_to t('button.archive'), archive_bulletin_path(bulletin), method: :post, class: 'btn btn-secondary'
           - if bulletin.state == 'archived'
             = t('bulletin.archived')
-
 
         = paginate @bulletins
 

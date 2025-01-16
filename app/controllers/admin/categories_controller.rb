@@ -20,7 +20,7 @@ class Admin::CategoriesController < ApplicationController
     if @category.update(category_params)
       redirect_to admin_categories_path, notice: I18n.t('flash.update', model: @bulletin.class.name)
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

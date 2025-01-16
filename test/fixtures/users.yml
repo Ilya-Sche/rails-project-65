@@ -8,6 +8,6 @@ two:
   name: MyString
   email: MyString
 
-admin_user:
+admin:
   email: "admin@example.com"
   admin: true

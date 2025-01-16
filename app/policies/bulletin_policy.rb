@@ -1,23 +1,31 @@
 # frozen_string_literal: true
 
 class BulletinPolicy < ApplicationPolicy
-  def index?
-    user.admin?
+  attr_reader :user, :bulletin
+
+  def initialize(user, bulletin)
+    super
+    @user = user
+    @bulletin = bulletin
   end
 
-  def create?
-    user.admin?
+  def show?
+    true
   end
 
   def edit?
-    user.admin?
+    bulletin.user == user
+  end
+
+  def create?
+    user.present?
   end
 
   def update?
-    user.admin?
+    user.admin? || bulletin.user == user
   end
 
   def destroy?
-    user.admin?
+    user.admin? || bulletin.user == user
   end
 end
