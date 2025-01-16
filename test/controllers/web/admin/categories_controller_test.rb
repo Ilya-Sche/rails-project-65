@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
+class Web::Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:admin)
     @category = categories(:one)

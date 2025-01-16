@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Admin::BulletinsController < ApplicationController
+class Web::Admin::BulletinsController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_admin
 

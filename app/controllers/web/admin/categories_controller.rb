@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Admin::CategoriesController < ApplicationController
+class Web::Admin::CategoriesController < ApplicationController
   before_action :authorize_admin
 
   def index

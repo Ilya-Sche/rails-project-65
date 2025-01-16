@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   get 'up' => 'rails/health#show', as: :rails_health_check
   get 'profile', to: 'user#show'
-  get 'admin', to: 'admin/bulletins#admin'
+  get 'admin', to: 'web/admin/bulletins#admin'
 
   get 'service-worker' => 'rails/pwa#service_worker', as: :pwa_service_worker
   get 'manifest' => 'rails/pwa#manifest', as: :pwa_manifest
@@ -28,17 +28,19 @@ Rails.application.routes.draw do
 
   resources :users, controller: 'user'
 
-  namespace :admin do
-    resources :categories
-    resources :bulletins do
-      member do
-        post :send_for_moderation
-        post :publish
-        post :reject
-        post :archive
-      end
-      collection do
-        get 'moderation'
+  scope module: 'web'  do
+    namespace :admin do
+      resources :categories
+      resources :bulletins do
+        member do
+          post :send_for_moderation
+          post :publish
+          post :reject
+          post :archive
+        end
+        collection do
+          get 'moderation'
+        end
       end
     end
   end
