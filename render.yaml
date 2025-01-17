@@ -1,6 +1,6 @@
 databases:
-  - name: Rails-65
-    databaseName: rails-project-65_1
+  - name: rails-project-65_1
+    databaseName: dpg-cu51lji3esus73almieg-a
     user: rails_project_65_1_user
     plan: free
 
