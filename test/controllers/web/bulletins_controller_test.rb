@@ -67,7 +67,7 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should archive bulletin' do
-    post archive_bulletin_url(@bulletin)
+    patch archive_bulletin_url(@bulletin)
     @bulletin.reload
     assert_equal 'archived', @bulletin.state
   end

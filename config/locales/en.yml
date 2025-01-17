@@ -78,6 +78,7 @@ en:
     on_moderation: "Bulletins on moderation"
     name: "Bulletin name"
     delete_images: "Delete images"
+    not_found: "Bulletins not found"
   destroy:
     confirm: "Are you sure?"
   user:

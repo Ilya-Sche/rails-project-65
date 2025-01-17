@@ -54,21 +54,21 @@ class Web::Admin::BulletinsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should publish bulletin' do
-    post publish_admin_bulletin_path(@bulletin_two)
+    patch publish_admin_bulletin_path(@bulletin_two)
     @bulletin_two.reload
     assert_equal 'published', @bulletin_two.state
     assert_redirected_to admin_bulletins_path
   end
 
   test 'should reject bulletin' do
-    post reject_admin_bulletin_path(@bulletin_two)
+    patch reject_admin_bulletin_path(@bulletin_two)
     @bulletin_two.reload
     assert_equal 'rejected', @bulletin_two.state
     assert_redirected_to admin_bulletins_path
   end
 
   test 'should archive bulletin' do
-    post archive_admin_bulletin_path(@bulletin)
+    patch archive_admin_bulletin_path(@bulletin)
     @bulletin.reload
     assert_equal 'archived', @bulletin.state
     assert_redirected_to admin_bulletins_path

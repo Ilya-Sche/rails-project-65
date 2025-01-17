@@ -53,7 +53,7 @@ class Web::Admin::BulletinsController < ApplicationController
 
   def reject
     @bulletin = Bulletin.find(params[:id])
-    if @bulletin.reject!(state: :rejected)
+    if @bulletin.reject!
       redirect_to admin_bulletins_path, notice: I18n.t('flash.reject', model: @bulletin.class.name)
     else
       redirect_to admin_bulletins_path, alert: I18n.t('flash.error')
@@ -62,7 +62,7 @@ class Web::Admin::BulletinsController < ApplicationController
 
   def archive
     @bulletin = Bulletin.find(params[:id])
-    if @bulletin.archive!(state: :archived)
+    if @bulletin.archive!
       redirect_to admin_bulletins_path, notice: I18n.t('flash.archive', model: @bulletin.class.name)
     else
       redirect_to admin_bulletins_path, alert: I18n.t('flash.error')

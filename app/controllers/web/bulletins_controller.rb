@@ -49,7 +49,7 @@ class Web::BulletinsController < Web::ApplicationController
 
   def send_for_moderation
     @bulletin = Bulletin.find(params[:id])
-    if @bulletin.send_for_moderation!(state: :under_moderation)
+    if @bulletin.send_for_moderation!
       redirect_to profile_path, notice: I18n.t('flash.moderate', model: @bulletin.class.name)
     else
       redirect_to profile_path, alert: I18n.t('flash.error')
@@ -58,7 +58,7 @@ class Web::BulletinsController < Web::ApplicationController
 
   def archive
     @bulletin = Bulletin.find(params[:id])
-    if @bulletin.archive!(state: :archived)
+    if @bulletin.archive!
       redirect_to profile_path, notice: I18n.t('flash.archive', model: @bulletin.class.name)
     else
       redirect_to profile_path, alert: I18n.t('flash.error')

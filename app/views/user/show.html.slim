@@ -38,11 +38,11 @@ table.table
           = link_to t('bulletin.show'), bulletin_path(bulletin), class: 'btn btn-info'
           - if bulletin.state == 'draft'
             = button_to t('button.moderate'), send_for_moderation_bulletin_path(bulletin), method: :post, class: 'btn btn-warning'
-            = button_to t('button.archive'), archive_bulletin_path(bulletin), method: :post, class: 'btn btn-danger'
+            = button_to t('button.archive'), archive_bulletin_path(bulletin), method: :patch, class: 'btn btn-danger'
           - if bulletin.state == 'published'
-            = button_to t('button.archive'), archive_bulletin_path(bulletin), method: :post, class: 'btn btn-secondary'
+            = button_to t('button.archive'), archive_bulletin_path(bulletin), method: :patch, class: 'btn btn-secondary'
           - if bulletin.state == 'rejected'
-            = button_to t('button.archive'), archive_bulletin_path(bulletin), method: :post, class: 'btn btn-secondary'
+            = button_to t('button.archive'), archive_bulletin_path(bulletin), method: :patch, class: 'btn btn-secondary'
           - if bulletin.state == 'archived'
             = t('bulletin.archived')
 

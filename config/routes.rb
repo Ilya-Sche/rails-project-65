@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     resources :bulletins, controller: 'web/bulletins' do
       member do
         post :send_for_moderation
-        post :archive
+        patch :archive
       end
     end
   end
@@ -34,9 +34,9 @@ Rails.application.routes.draw do
       resources :bulletins do
         member do
           post :send_for_moderation
-          post :publish
-          post :reject
-          post :archive
+          patch :publish
+          patch :reject
+          patch :archive
         end
         collection do
           get 'moderation'
