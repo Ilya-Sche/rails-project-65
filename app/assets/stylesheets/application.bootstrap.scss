@@ -113,3 +113,39 @@ thead {
 .td {
   vertical-align: middle;
 }
+
+.pagination {
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination .page-item {
+  margin: 0 5px;
+}
+
+.pagination .page-item .page-link {
+  border-radius: 5px;
+  padding: 8px 15px;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+  background-color: #f0f0f0;
+  border-color: #f0f0f0;
+  color: #ccc;
+}
+
+.pagination .page-link {
+  border: 1px solid #ddd;
+  color: #007bff;
+}
+
+.pagination .page-link:hover {
+  background-color: #0056b3;
+  color: white;
+}

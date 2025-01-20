@@ -5,9 +5,9 @@ class UserController < ApplicationController
 
   def show
     authenticate_user!
-    @bulletins = current_user.bulletins
+    @bulletins = current_user.bulletins.page(params[:page]).per(10)
     @q = Bulletin.ransack(params[:q])
-    @bulletins = @q.result(distinct: true).page(params[:page])
+    @bulletins = @q.result(distinct: true).page(params[:page]).per(10)
   end
 
   def create

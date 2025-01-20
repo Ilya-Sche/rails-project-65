@@ -79,6 +79,7 @@ en:
     name: "Bulletin name"
     delete_images: "Delete images"
     not_found: "Bulletins not found"
+    state: "Bulletin state"
   destroy:
     confirm: "Are you sure?"
   user:

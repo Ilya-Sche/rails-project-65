@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_16_115614) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_20_100352) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -40,20 +40,20 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_16_115614) do
   end
 
   create_table "bulletins", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.text "description"
     t.string "image"
     t.integer "category_id", null: false
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "state", default: "draft"
+    t.string "state", default: "draft", null: false
     t.index ["category_id"], name: "index_bulletins_on_category_id"
     t.index ["user_id"], name: "index_bulletins_on_user_id"
   end
 
   create_table "categories", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

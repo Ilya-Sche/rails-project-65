@@ -4,7 +4,7 @@ class Web::BulletinsController < Web::ApplicationController
   before_action :authenticate_user!, except: %i[index show]
 
   def index
-    @bulletins = Bulletin.includes(:category, :user).where(state: :published).order(created_at: :desc)
+    @bulletins = Bulletin.includes(:category, :user).where(state: :published).order(created_at: :desc).page(params[:page]).per(10)
     @q = Bulletin.ransack(params[:q])
     @bulletins = @q.result(distinct: true).page(params[:page]).per(10)
   end

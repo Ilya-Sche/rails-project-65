@@ -5,7 +5,6 @@ class Web::Admin::BulletinsController < ApplicationController
   before_action :authorize_admin
 
   def admin
-    @categories = Category.all
     @bulletins = Bulletin.includes(:category, :user).order(created_at: :desc)
   end
 
@@ -14,9 +13,9 @@ class Web::Admin::BulletinsController < ApplicationController
   end
 
   def index
-    @bulletins = Bulletin.all
+    @bulletins = Bulletin.all.page(params[:page]).per(10)
     @q = Bulletin.ransack(params[:q])
-    @bulletins = @q.result(distinct: true).page(params[:page])
+    @bulletins = @q.result(distinct: true).page(params[:page]).per(10)
   end
 
   def show

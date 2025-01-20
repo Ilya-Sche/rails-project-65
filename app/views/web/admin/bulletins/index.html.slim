@@ -1,4 +1,4 @@
-h1 = t('bulletins.manage')
+h1.text-center = t('bulletins.manage')
 
 .container.mt-4
   .card.bg-light
@@ -8,41 +8,43 @@ h1 = t('bulletins.manage')
           .col-md-3
             .form-group
               = f.label :title_cont, t('search.name')
-              = f.text_field :title_cont, class: 'form-control', placeholder: 'Название объявления'
+              = f.text_field :title_cont, class: 'form-control', placeholder: t('bulletin.title')
           .col-md-3
             .form-group
               = f.label :description_cont, t('search.state')
-              = f.text_field :state_cont, class: 'form-control', placeholder: 'Описание'
+              = f.text_field :state_cont, class: 'form-control', placeholder: t('bulletin.description')
           .col-md-3
             .form-group.mt-md-4
               = f.submit t('search.find'), class: 'btn btn-primary mt-4 mt-md-0'
           .col-md-3
             .form-group.mt-md-4
               = link_to t('search.reset'), admin_bulletins_path, class: 'btn btn-secondary mt-4 mt-md-0'
-
-table.table
-  thead
-    tr
-      th = t('bulletin.title')
-      th = t('bulletin.state')
-      th = t('bulletin.actions')
-  tbody
-    - @bulletins.each do |bulletin|
+- if @bulletins.empty?
+  p
+- else
+  table.table
+    thead
       tr
-        td = bulletin.title
-        td = bulletin.state.humanize
-        td
-          = link_to t('bulletin.show'), admin_bulletin_path(bulletin), class: 'btn btn-info'
-          - if bulletin.state == 'draft'
-            = button_to t('button.moderate'), send_for_moderation_admin_bulletin_path(bulletin), method: :post, class: 'btn btn-warning'
-            = button_to t('button.archive'), archive_admin_bulletin_path(bulletin), method: :patch, class: 'btn btn-danger'
-          - if bulletin.state == 'under_moderation'
-            = button_to t('button.publish'), publish_admin_bulletin_path(bulletin), method: :patch, class: 'btn btn-success'
-            = button_to t('button.reject'), reject_admin_bulletin_path(bulletin), method: :patch, class: 'btn btn-danger'
-          - if bulletin.state == 'published'
-            = button_to t('button.archive'), archive_admin_bulletin_path(bulletin), method: :patch, class: 'btn btn-secondary'
-          - if bulletin.state == 'rejected'
-            = button_to t('button.archive'), archive_admin_bulletin_path(bulletin), method: :patch, class: 'btn btn-secondary'
-          - if bulletin.state == 'archived'
-            = t('bulletin.archived')
-          = paginate @bulletins
+        th = t('bulletin.title')
+        th = t('bulletin.state')
+        th = t('bulletin.actions')
+    tbody
+      - @bulletins.each do |bulletin|
+        tr
+          td = bulletin.title
+          td = bulletin.state.humanize
+          td
+            = link_to t('bulletin.show'), admin_bulletin_path(bulletin), class: 'btn btn-info'
+            - if bulletin.state == 'draft'
+              = button_to t('button.moderate'), send_for_moderation_admin_bulletin_path(bulletin), method: :post, class: 'btn btn-warning'
+              = button_to t('button.archive'), archive_admin_bulletin_path(bulletin), method: :patch, class: 'btn btn-danger'
+            - if bulletin.state == 'under_moderation'
+              = button_to t('button.publish'), publish_admin_bulletin_path(bulletin), method: :patch, class: 'btn btn-success'
+              = button_to t('button.reject'), reject_admin_bulletin_path(bulletin), method: :patch, class: 'btn btn-danger'
+            - if bulletin.state == 'published'
+              = button_to t('button.archive'), archive_admin_bulletin_path(bulletin), method: :patch, class: 'btn btn-secondary'
+            - if bulletin.state == 'rejected'
+              = button_to t('button.archive'), archive_admin_bulletin_path(bulletin), method: :patch, class: 'btn btn-secondary'
+.pagination-wrapper
+  .pagination
+    = paginate @bulletins

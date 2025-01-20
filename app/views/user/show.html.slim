@@ -1,4 +1,4 @@
-h1 = t('bulletin.bulletins')
+h1.text-center = t('bulletin.bulletins')
 
 .container.mt-4
   .card.bg-light
@@ -12,7 +12,7 @@ h1 = t('bulletin.bulletins')
           .col-md-3
             .form-group
               = f.label :description_cont, t('search.state')
-              = f.text_field :state_cont, class: 'form-control', placeholder: t('bulletin.description')
+              = f.text_field :state_cont, class: 'form-control', placeholder: t('bulletin.state')
           .col-md-3
             .form-group.mt-md-4
               = f.submit t('search.find'), class: 'btn btn-primary mt-4 mt-md-0'
@@ -22,30 +22,29 @@ h1 = t('bulletin.bulletins')
 
 - if current_user.bulletins.empty?
   p = t('bulletin.empty')
-
-table.table
-  thead
-    tr
-      th = t('bulletin.title')
-      th = t('bulletin.state')
-      th = t('bulletin.actions')
-  tbody
-    - current_user.bulletins.each do |bulletin|
+- else
+  table.table.table-striped
+    thead
       tr
-        td = link_to bulletin.title, bulletin_path(bulletin)
-        td = bulletin.state.humanize
-        td
-          = link_to t('bulletin.show'), bulletin_path(bulletin), class: 'btn btn-info'
-          - if bulletin.state == 'draft'
-            = button_to t('button.moderate'), send_for_moderation_bulletin_path(bulletin), method: :post, class: 'btn btn-warning'
-            = button_to t('button.archive'), archive_bulletin_path(bulletin), method: :patch, class: 'btn btn-danger'
-          - if bulletin.state == 'published'
-            = button_to t('button.archive'), archive_bulletin_path(bulletin), method: :patch, class: 'btn btn-secondary'
-          - if bulletin.state == 'rejected'
-            = button_to t('button.archive'), archive_bulletin_path(bulletin), method: :patch, class: 'btn btn-secondary'
-          - if bulletin.state == 'archived'
-            = t('bulletin.archived')
+        th.h5 = t('bulletin.title')
+        th.h5 = t('bulletin.state')
+        th.h5 = t('bulletin.actions')
+    tbody
+      - current_user.bulletins.each do |bulletin|
+        tr.font-weight-bold
 
-        = paginate @bulletins
+          td.h4 = link_to bulletin.title, bulletin_path(bulletin)
+          td.h4 = bulletin.state.humanize
+          td
+            = link_to t('bulletin.show'), bulletin_path(bulletin), class: 'btn btn-info'
+            - if bulletin.state == 'draft'
+              = button_to t('button.moderate'), send_for_moderation_bulletin_path(bulletin), method: :post, class: 'btn btn-warning'
+              = button_to t('button.archive'), archive_bulletin_path(bulletin), method: :patch, class: 'btn btn-danger'
+            - if bulletin.state == 'published'
+              = button_to t('button.archive'), archive_bulletin_path(bulletin), method: :patch, class: 'btn btn-secondary'
+            - if bulletin.state == 'rejected'
+              = button_to t('button.archive'), archive_bulletin_path(bulletin), method: :patch, class: 'btn btn-secondary'
+
+= paginate @bulletins
 
 = link_to t('bulletin.create'), new_bulletin_path, class: 'btn btn-success mt-4'

@@ -11,6 +11,10 @@ class Web::Admin::CategoriesController < ApplicationController
     @category = Category.find(params[:id])
   end
 
+  def new
+    @category = Category.new
+  end
+
   def edit
     @category = Category.find(params[:id])
   end
@@ -43,7 +47,7 @@ class Web::Admin::CategoriesController < ApplicationController
   private
 
   def category_params
-    params.require(:category).permit(:name, :description)
+    params.require(:category).permit(:name)
   end
 
   def authorize_admin

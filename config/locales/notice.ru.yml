@@ -1,0 +1,16 @@
+ru:
+  activerecord:
+    models:
+      bulletin: "Объявление"
+      category: "Категория"
+
+  flash:
+    create: "%{model}  успешно создано."
+    update: "%{model}  успешно обновлено."
+    destroy: "%{model}  успешно удалено."
+    moderate: "%{model} было отправлено на модерацию."
+    reject: "%{model} было отклонено."
+    archive: "%{model} было успешно отправлено в архив."
+    publish: "%{model} было успешно опубликовано."
+    error: "Ошибка"
+    empty: "Все необходимые поля должны быть заполнены!"

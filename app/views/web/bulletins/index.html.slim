@@ -1,4 +1,4 @@
-h1 = t('bulletin.bulletins')
+h1.text-center = t('bulletin.bulletins')
 
 .container.mt-4
   .card.bg-light
@@ -37,7 +37,7 @@ h1 = t('bulletin.bulletins')
               .card-body.text-center
                 = link_to bulletin.title, bulletin_path(bulletin), class: 'card-title h4 text-primary', style: 'text-decoration: none;'
 
-              = paginate @bulletins
-- else
+    = paginate @bulletins
+- elsif @q.title_cont.present? || @q.description_cont.present?
   .alert.alert-warning
     strong = t('bulletin.not_found')
