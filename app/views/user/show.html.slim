@@ -19,6 +19,8 @@ h1.text-center = t('bulletin.bulletins')
           .col-md-3
             .form-group.mt-md-4
               = link_to t('search.reset'), bulletins_path, class: 'btn btn-secondary mt-4 mt-md-0'
+  - if params[:q].present? && @bulletins.empty?
+      strong = t('bulletin.empty')
 
 - if current_user.bulletins.empty?
   p = t('bulletin.empty')
