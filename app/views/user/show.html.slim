@@ -46,7 +46,8 @@ h1.text-center = t('bulletin.bulletins')
               = button_to t('button.archive'), archive_bulletin_path(bulletin), method: :patch, class: 'btn btn-secondary'
             - if bulletin.state == 'rejected'
               = button_to t('button.archive'), archive_bulletin_path(bulletin), method: :patch, class: 'btn btn-secondary'
-
-= paginate @bulletins
+.pagination-wrapper
+  .pagination
+    = paginate @bulletins
 
 = link_to t('bulletin.create'), new_bulletin_path, class: 'btn btn-success mt-4'

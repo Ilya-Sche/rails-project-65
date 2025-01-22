@@ -8,11 +8,11 @@ h1.text-center = t('bulletin.bulletins')
           .col-md-3
             .form-group
               = f.label :title_cont, t('search.name')
-              = f.text_field :title_cont, class: 'form-control', placeholder: 'Название объявления'
+              = f.text_field :title_cont, class: 'form-control', placeholder: t('bulletin.name')
           .col-md-3
             .form-group
               = f.label :description_cont, t('search.state')
-              = f.text_field :description_cont, class: 'form-control', placeholder: 'Описание'
+              = f.text_field :description_cont, class: 'form-control', placeholder: t('bulletin.state')
           .col-md-3
             .form-group.mt-md-4
               = f.submit t('search.find'), class: 'btn btn-primary mt-4 mt-md-0'
@@ -36,8 +36,9 @@ h1.text-center = t('bulletin.bulletins')
                   = t('bulletin.no_images')
               .card-body.text-center
                 = link_to bulletin.title, bulletin_path(bulletin), class: 'card-title h4 text-primary', style: 'text-decoration: none;'
-
-    = paginate @bulletins
+  .pagination-wrapper
+    .pagination
+      = paginate @bulletins
 - elsif @q.title_cont.present? || @q.description_cont.present?
   .alert.alert-warning
     strong = t('bulletin.not_found')
