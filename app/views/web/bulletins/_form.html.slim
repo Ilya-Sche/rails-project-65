@@ -5,19 +5,24 @@
 
   .form-inputs
     .mb-3
-    = f.input :title, label_html: { class: 'form-label' }, input_html: { class: 'form-control' }
+    = f.label :title, I18n.t('bulletin.title'), class: 'form-label'
+    = f.text_field :title, class: 'form-control'
 
   .mb-3
   p
-    = f.input :description, label_html: { class: 'form-label' }, input_html: { class: 'form-control' }
+    = f.label :description, I18n.t('bulletin.description'), class: 'form-label'
+    = f.text_field :description, class: 'form-control'
 
   .mb-3
   p
-    = f.association :category, label_html: { class: 'form-label' }, input_html: { class: 'form-control' }
+    = f.label :category, I18n.t('category.category'), class: 'form-label'
+    = f.association :category, input_html: { class: 'form-control' }, label: false
 
   .mb-3
   p
+    = f.label :images, I18n.t('bulletin.images'), class: 'form-label'
+    p
     = f.file_field :images, multiple: true, label_html: { class: 'form-label' }, input_html: { class: 'form-control' }
 
   .form-actions
-    = f.button :submit, class: 'btn btn-success mt-3 w-100'
+    = f.button :submit, bulletin.new_record? ? I18n.t('bulletin.create') : I18n.t('bulletin.update'), class: 'btn btn-success mt-3 w-100'
