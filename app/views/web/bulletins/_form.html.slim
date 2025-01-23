@@ -31,9 +31,9 @@
     p
   .form-group
     .card-img-container
-      - bulletin.images.each_with_index do |image, index|
+      - bulletin.images.each do |image|
         .image-thumbnail
-          = image_tag image, alt: "Image ##{index + 1}", class: 'img-thumbnail'
+          = image_tag image, alt: 'Image', class: 'img-thumbnail'
 
   .form-actions
     = f.button :submit, bulletin.new_record? ? I18n.t('bulletin.create') : I18n.t('bulletin.update'), class: 'btn btn-success mt-3 w-100'
