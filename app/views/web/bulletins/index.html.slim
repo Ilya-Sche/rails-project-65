@@ -11,8 +11,8 @@ h1.text-center = t('bulletin.bulletins')
               = f.text_field :title_cont, class: 'form-control', placeholder: t('bulletin.name')
           .col-md-3
             .form-group
-              = f.label :description_cont, t('search.state')
-              = f.text_field :description_cont, class: 'form-control', placeholder: t('bulletin.state')
+              = f.label :category_id_eq, t('search.category')
+              = f.select :category_id_eq, options_from_collection_for_select(Category.all, :id, :name), { include_blank: true }, class: 'form-control'
           .col-md-3
             .form-group.mt-md-4
               = f.submit t('search.find'), class: 'btn btn-primary mt-4 mt-md-0'
@@ -22,19 +22,15 @@ h1.text-center = t('bulletin.bulletins')
 
 - if @bulletins.any?
   .container.mt-4
-    .row
+    .row.h-100
       - @bulletins.each do |bulletin|
         .col-12.col-md-4.mb-4
-          .card
-            .card-body
-              - if bulletin.images.attached?
-                .card-img-top
-                  - bulletin.images.each do |image|
-                    = image_tag image, alt: 'Bulletin Image', class: 'img-fluid w-100', style: 'height: auto;'
-              - else
-                .card-body
-                  = t('bulletin.no_images')
-              .card-body.text-center
+          .card.d-flex.flex-column.h-100
+            .card-body.d-flex.flex-column
+              - bulletin.images.each do |image|
+                = image_tag image, alt: 'Bulletin Image', class: 'img-fluid w-100', style: 'height: 200px; object-fit: cover;'
+
+              .card-body.text-center.mt-auto
                 = link_to bulletin.title, bulletin_path(bulletin), class: 'card-title h4 text-primary', style: 'text-decoration: none;'
   .pagination-wrapper
     .pagination

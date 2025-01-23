@@ -51,6 +51,9 @@ en:
     destroyed: "Category destroyed!"
     name: "Category name"
     update: "Update category"
+    empty: "Name can't be blank"
+    referenced: "Category with bulletins can't be destroyed!"
+    delete: "Delete category"
   bulletin:
     bulletins: "Bulletins"
     editing: "Editing bulletin"
@@ -111,3 +114,5 @@ en:
     state: "Search by state"
     find: "Find"
     reset: "Reset"
+  image:
+    delete: "Delete image"

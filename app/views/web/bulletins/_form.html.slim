@@ -1,3 +1,8 @@
+- if bulletin.errors.any?
+  .alert.alert-danger
+    - bulletin.errors.full_messages.each do |message|
+      li = message
+
 = simple_form_for(bulletin) do |f|
   .form-group
     = f.error_notification
@@ -23,6 +28,12 @@
     = f.label :images, I18n.t('bulletin.images'), class: 'form-label'
     p
     = f.file_field :images, multiple: true, label_html: { class: 'form-label' }, input_html: { class: 'form-control' }
+    p
+  .form-group
+    .card-img-container
+      - bulletin.images.each_with_index do |image, index|
+        .image-thumbnail
+          = image_tag image, alt: "Image ##{index + 1}", class: 'img-thumbnail'
 
   .form-actions
     = f.button :submit, bulletin.new_record? ? I18n.t('bulletin.create') : I18n.t('bulletin.update'), class: 'btn btn-success mt-3 w-100'

@@ -8,6 +8,7 @@ class Bulletin < ApplicationRecord
 
   validates :title, presence: true, length: { maximum: 50 }
   validates :description, presence: true, length: { maximum: 1000 }
+  validates :images, presence: true
   validate :image_size
 
   has_many_attached :images
@@ -38,6 +39,10 @@ class Bulletin < ApplicationRecord
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[title description state]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    ['category']
   end
 
   private

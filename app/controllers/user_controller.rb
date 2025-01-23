@@ -19,7 +19,7 @@ class UserController < ApplicationController
       session[:user_id] = @user.id
       redirect_to root_path, notice: I18n.t('user.entered')
     else
-      render :new, status: :unprocessable_entity
+      redirect_to root_path, alert: I18n.t('user.auth')
     end
   end
 

@@ -13,9 +13,13 @@ class Web::Admin::BulletinsController < ApplicationController
   end
 
   def index
-    @bulletins = Bulletin.all.page(params[:page]).per(10)
     @q = Bulletin.ransack(params[:q])
-    @bulletins = @q.result(distinct: true).page(params[:page]).per(10)
+    @bulletins = Bulletin.all
+                         .ransack(params[:q])
+                         .result
+                         .order(created_at: :desc)
+                         .page(params[:page])
+                         .per(10)
   end
 
   def show
@@ -75,7 +79,7 @@ class Web::Admin::BulletinsController < ApplicationController
   end
 
   def authenticate_user!
-    redirect_to new_user_path, alert: I18n.t('user.auth') unless current_user
+    redirect_to root_path, alert: I18n.t('user.auth') unless current_user
   end
 
   def authorize_admin

@@ -7,6 +7,6 @@ h1 class="text-center" = t('category.categories')
       p.text-left
         = link_to t('category.show'), admin_category_path(category), class: 'btn btn-primary btn-lg'
         = link_to t('category.edit'), edit_admin_category_path(category), class: 'btn btn-warning btn-lg'
-        = link_to t('category.delete'), admin_category_path(category), method: :delete, data: { confirm: t('destoy.confirm') }, class: 'btn btn-danger btn-lg'
+        = button_to t('category.delete'), admin_category_path(category), method: :delete, data: { turbo_confirm: t('destroy.confirm') }, class: 'btn btn-danger btn-lg'
 
 = link_to t('category.new'), new_admin_category_path, class: 'btn btn-success btn-lg'

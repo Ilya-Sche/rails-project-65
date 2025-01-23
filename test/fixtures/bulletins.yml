@@ -6,6 +6,10 @@ one:
   image: MyString
   category: one
   user: one
+  image:
+    io: <%= Rails.root.join('test', 'fixtures', 'files', 'example_image.jpg').open %>
+    filename: example_image.jpg
+    content_type: image/jpeg
 
 two:
   title: MyString
@@ -14,3 +18,7 @@ two:
   category: two
   user: two
   state: under_moderation
+  image:
+    io: <%= Rails.root.join('test', 'fixtures', 'files', 'example_image.jpg').open %>
+    filename: example_image.jpg
+    content_type: image/jpeg

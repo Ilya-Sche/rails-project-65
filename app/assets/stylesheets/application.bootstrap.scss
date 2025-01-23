@@ -149,3 +149,15 @@ thead {
   background-color: #0056b3;
   color: white;
 }
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}

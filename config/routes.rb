@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   get 'manifest' => 'rails/pwa#manifest', as: :pwa_manifest
 
   scope :web do
-    resources :categories, controller: 'web/categories'
+    resources :categories, only: %i[index show], controller: 'web/categories'
     resources :bulletins, controller: 'web/bulletins' do
       member do
         post :send_for_moderation

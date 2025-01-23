@@ -21,8 +21,5 @@ h1.text-center.display-3.text-body-emphasis
         = bulletin.state
 
   p
-  - if bulletin.images.attached?
-    - bulletin.images.each do |image|
-      = image_tag image, alt: 'Bulletin Image', class: 'img-fluid'
-  - else
-      strong = t('bulletin.no_images')
+  - bulletin.images.each do |image|
+    = image_tag image, alt: 'Bulletin Image', class: 'img-fluid'

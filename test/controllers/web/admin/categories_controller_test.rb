@@ -5,7 +5,7 @@ require 'test_helper'
 class Web::Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:admin)
-    @category = categories(:one)
+    @category = categories(:three)
     sign_in @user
   end
 

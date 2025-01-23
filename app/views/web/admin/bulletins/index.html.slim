@@ -3,7 +3,7 @@ h1.text-center = t('bulletins.manage')
 .container.mt-4
   .card.bg-light
     .card-body
-      = search_form_for @q, url: bulletins_path, method: :get, class: 'form-inline' do |f|
+      = search_form_for @q, url: admin_bulletins_path, method: :get, class: 'form-inline' do |f|
         .row
           .col-md-3
             .form-group
@@ -11,8 +11,11 @@ h1.text-center = t('bulletins.manage')
               = f.text_field :title_cont, class: 'form-control', placeholder: t('bulletin.title')
           .col-md-3
             .form-group
-              = f.label :description_cont, t('search.state')
-              = f.text_field :state_cont, class: 'form-control', placeholder: t('bulletin.description')
+              = f.label :state_cont, t('search.state')
+              = f.select :state_cont, options_for_select([['Draft', 'draft'],
+              ['Under moderation', 'under_moderation'],
+              ['Published', 'published'],
+              ['Archived', 'archived']], params.dig(:q, :state_cont)), { include_blank: true }, class: 'form-control'
           .col-md-3
             .form-group.mt-md-4
               = f.submit t('search.find'), class: 'btn btn-primary mt-4 mt-md-0'
@@ -39,15 +42,14 @@ h1.text-center = t('bulletins.manage')
           td
             = link_to t('bulletin.show'), admin_bulletin_path(bulletin), class: 'btn btn-info'
             - if bulletin.state == 'draft'
-              = button_to t('button.moderate'), send_for_moderation_admin_bulletin_path(bulletin), method: :post, class: 'btn btn-warning'
-              = button_to t('button.archive'), archive_admin_bulletin_path(bulletin), method: :patch, class: 'btn btn-danger'
+              = button_to t('button.archive'), archive_admin_bulletin_path(bulletin), method: :patch, data: { turbo_confirm: t('destroy.confirm') }, class: 'btn btn-danger'
             - if bulletin.state == 'under_moderation'
               = button_to t('button.publish'), publish_admin_bulletin_path(bulletin), method: :patch, class: 'btn btn-success'
-              = button_to t('button.reject'), reject_admin_bulletin_path(bulletin), method: :patch, class: 'btn btn-danger'
+              = button_to t('button.reject'), reject_admin_bulletin_path(bulletin), method: :patch, data: { turbo_confirm: t('destroy.confirm') }, class: 'btn btn-danger'
             - if bulletin.state == 'published'
-              = button_to t('button.archive'), archive_admin_bulletin_path(bulletin), method: :patch, class: 'btn btn-secondary'
+              = button_to t('button.archive'), archive_admin_bulletin_path(bulletin), method: :patch, data: { turbo_confirm: t('destroy.confirm') }, class: 'btn btn-secondary'
             - if bulletin.state == 'rejected'
-              = button_to t('button.archive'), archive_admin_bulletin_path(bulletin), method: :patch, class: 'btn btn-secondary'
+              = button_to t('button.archive'), archive_admin_bulletin_path(bulletin), method: :patch, data: { turbo_confirm: t('destroy.confirm') }, class: 'btn btn-secondary'
 .pagination-wrapper
   .pagination
     = paginate @bulletins
