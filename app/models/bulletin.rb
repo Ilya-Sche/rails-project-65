@@ -8,7 +8,7 @@ class Bulletin < ApplicationRecord
 
   validates :title, presence: true, length: { maximum: 50 }
   validates :description, presence: true, length: { maximum: 1000 }
-  validates :images, presence: true
+  # validates :images, presence: true
   validate :image_size
 
   has_many_attached :images
