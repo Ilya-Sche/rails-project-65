@@ -9,8 +9,8 @@
   )
 
   @bulletin.image.attach(
-    io: File.open(Rails.root.join('test', 'fixtures', 'files', 'example_image.jpg')), 
-    filename: 'example_image.jpg', 
+    io: Rails.root.join('test/fixtures/files/example_image.jpg').open,
+    filename: 'example_image.jpg',
     content_type: 'image/jpeg'
   )
 end

@@ -48,8 +48,8 @@ class Bulletin < ApplicationRecord
   private
 
   def image_size
-    if image.attached? && image.blob.byte_size > 5.megabytes
-      errors.add(:image, 'Each image should be less than 5MB')
-    end
+    return unless image.attached? && image.blob.byte_size > 5.megabytes
+
+    errors.add(:image, 'Each image should be less than 5MB')
   end
 end
