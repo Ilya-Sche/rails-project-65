@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# require_relative 'seeds/categories'
+require_relative 'seeds/categories'
 require_relative 'seeds/bulletins'
 
 # This file should ensure the existence of records required to run the application in every environment (production,

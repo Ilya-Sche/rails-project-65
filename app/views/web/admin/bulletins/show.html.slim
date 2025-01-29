@@ -13,11 +13,8 @@ p
 p
   strong = "#{t('bulletin.images')} :"
 
-  - if @bulletin.images.attached?
-    - @bulletin.images.each do |image|
-      = image_tag image, alt: 'Bulletin Image', class: 'img-fluid', style: 'max-width: 600px;'
-  - else
-    strong = "#{t('bulletin.no_images')} :"
+  - if @bulletin.image.attached?
+    = image_tag @bulletin.image, alt: 'Bulletin Image', class: 'img-fluid', style: 'max-width: 600px;'
 
 p
   strong Статус:

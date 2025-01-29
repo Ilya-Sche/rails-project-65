@@ -8,7 +8,7 @@
     user_id: User.all.sample.id
   )
 
-  @bulletin.images.attach(
+  @bulletin.image.attach(
     io: File.open(Rails.root.join('test', 'fixtures', 'files', 'example_image.jpg')), 
     filename: 'example_image.jpg', 
     content_type: 'image/jpeg'

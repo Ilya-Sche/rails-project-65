@@ -8,7 +8,7 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
     @category = categories(:one)
     @bulletin = bulletins(:one)
     @image = fixture_file_upload(Rails.root.join('test/fixtures/files/example_image.jpg'), 'image/jpeg')
-    @bulletin.images.attach(io: Rails.root.join('test/fixtures/files/example_image.jpg').open, filename: 'example_image.jpg')
+    @bulletin.image.attach(io: Rails.root.join('test/fixtures/files/example_image.jpg').open, filename: 'example_image.jpg')
     sign_in @user
   end
 
@@ -31,7 +31,7 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create bulletin with valid params' do
     assert_difference('Bulletin.count', 1) do
-      post bulletins_url, params: { bulletin: { title: 'New Bulletin', description: 'Description', category_id: @category.id, state: 'draft', images: [@image] } }
+      post bulletins_url, params: { bulletin: { title: 'New Bulletin', description: 'Description', category_id: @category.id, state: 'draft', image: @image } }
     end
     assert_redirected_to bulletin_url(Bulletin.last)
   end
@@ -44,7 +44,7 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update bulletin with valid params' do
-    patch bulletin_url(@bulletin), params: { bulletin: { title: 'Updated Title', images: [@image] } }
+    patch bulletin_url(@bulletin), params: { bulletin: { title: 'Updated Title', image: @image } }
     @bulletin.reload
     assert_equal 'Updated Title', @bulletin.title
     assert_redirected_to bulletin_url(@bulletin)

@@ -8,10 +8,10 @@ class Bulletin < ApplicationRecord
 
   validates :title, presence: true, length: { maximum: 50 }
   validates :description, presence: true, length: { maximum: 1000 }
-  # validates :images, presence: true
+  validates :image, presence: true
   validate :image_size
 
-  has_many_attached :images
+  has_one_attached :image
 
   aasm column: :state do
     state :draft, initial: true
@@ -48,10 +48,8 @@ class Bulletin < ApplicationRecord
   private
 
   def image_size
-    images.each do |image|
-      if image.blob.byte_size > 5.megabytes
-        errors.add(:images, 'Each image should be less than 5MB')
-      end
+    if image.attached? && image.blob.byte_size > 5.megabytes
+      errors.add(:image, 'Each image should be less than 5MB')
     end
   end
 end

@@ -75,7 +75,7 @@ class Web::Admin::BulletinsController < ApplicationController
   private
 
   def bulletin_params
-    params.require(:bulletin).permit(:title, :description, :category_id, :state, images: [])
+    params.require(:bulletin).permit(:title, :description, :category_id, :state, :image)
   end
 
   def authenticate_user!

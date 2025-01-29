@@ -25,15 +25,15 @@
 
   .mb-3
   p
-    = f.label :images, I18n.t('bulletin.images'), class: 'form-label'
+    = f.label :image, I18n.t('bulletin.images'), class: 'form-label'
     p
-    = f.file_field :images, multiple: true, label_html: { class: 'form-label' }, input_html: { class: 'form-control' }
+    = f.file_field :image, label_html: { class: 'form-label' }, input_html: { class: 'form-control' }
     p
   .form-group
     .card-img-container
-      - bulletin.images.each do |image|
+      - if bulletin.image.attached?
         .image-thumbnail
-          = image_tag image, alt: 'Image', class: 'img-thumbnail'
+          = image_tag bulletin.image, alt: 'Image', class: 'img-thumbnail'
 
   .form-actions
     = f.button :submit, bulletin.new_record? ? I18n.t('bulletin.create') : I18n.t('bulletin.update'), class: 'btn btn-success mt-3 w-100'

@@ -27,7 +27,7 @@ class Web::BulletinsController < Web::ApplicationController
   end
 
   def create
-    @bulletin = current_user.bulletins.build(bulletin_params_create)
+    @bulletin = current_user.bulletins.build(bulletin_params)
     if @bulletin.save
       redirect_to @bulletin, notice: I18n.t('flash.create', model: @bulletin.class.name)
     else
@@ -38,7 +38,7 @@ class Web::BulletinsController < Web::ApplicationController
   def update
     @bulletin = Bulletin.find(params[:id])
 
-    if @bulletin.update(bulletin_params_update)
+    if @bulletin.update(bulletin_params)
       redirect_to @bulletin, notice: I18n.t('flash.update', model: @bulletin.class.name)
     else
       render :edit, status: :unprocessable_entity
@@ -73,12 +73,8 @@ class Web::BulletinsController < Web::ApplicationController
 
   private
 
-  def bulletin_params_create
-    params.require(:bulletin).permit(:title, :description, :category_id, :state, images: [])
-  end
-
-  def bulletin_params_update
-    params.require(:bulletin).permit(:title, :description, :category_id, :state, :images)
+  def bulletin_params
+    params.require(:bulletin).permit(:title, :description, :category_id, :state, :image)
   end
 
   def authenticate_user!

@@ -27,8 +27,8 @@ h1.text-center = t('bulletin.bulletins')
         .col-12.col-md-4.mb-4
           .card.d-flex.flex-column.h-100
             .card-body.d-flex.flex-column
-              - bulletin.images.each do |image|
-                = image_tag image, alt: 'Bulletin Image', class: 'img-fluid w-100', style: 'height: 200px; object-fit: cover;'
+              - if bulletin.image.attached?
+                = image_tag bulletin.image, alt: 'Bulletin Image', class: 'img-fluid w-100', style: 'height: 200px; object-fit: cover;'
 
               .card-body.text-center.mt-auto
                 = link_to bulletin.title, bulletin_path(bulletin), class: 'card-title h4 text-primary', style: 'text-decoration: none;'
