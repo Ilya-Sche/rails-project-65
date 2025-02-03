@@ -3,7 +3,7 @@ h1.text-center = t('bulletin.bulletins')
 .container.mt-4
   .card.bg-light
     .card-body
-      = search_form_for @q, url: bulletins_path, method: :get, class: 'form-inline' do |f|
+      = search_form_for @q, url: profile_path, method: :get, class: 'form-inline' do |f|
         .row
           .col-md-3
             .form-group
@@ -11,18 +11,18 @@ h1.text-center = t('bulletin.bulletins')
               = f.text_field :title_cont, class: 'form-control', placeholder: t('bulletin.name')
           .col-md-3
             .form-group
-              = f.label :description_cont, t('search.state')
-              = f.text_field :state_cont, class: 'form-control', placeholder: t('bulletin.state')
+              = f.label :state_cont, t('search.state')
+              = f.select :state_cont,
+               options_for_select([['Published', :published], ['Draft', :draft], ['Archived', :archived], ['Rejected', :rejected], ['On moderation', :under_moderation]],
+               selected: params.dig(:q, :state_cont)), { include_blank: true }, class: 'form-control', placeholder: t('bulletin.state')
           .col-md-3
             .form-group.mt-md-4
               = f.submit t('search.find'), class: 'btn btn-primary mt-4 mt-md-0'
           .col-md-3
             .form-group.mt-md-4
-              = link_to t('search.reset'), bulletins_path, class: 'btn btn-secondary mt-4 mt-md-0'
-  - if params[:q].present? && @bulletins.empty?
-      strong = t('bulletin.empty')
+              = link_to t('search.reset'), profile_path, class: 'btn btn-secondary mt-4 mt-md-0'
 
-- if current_user.bulletins.empty?
+- if @bulletins.empty?
   p = t('bulletin.empty')
 - else
   table.table.table-striped
@@ -32,7 +32,7 @@ h1.text-center = t('bulletin.bulletins')
         th.h5 = t('bulletin.state')
         th.h5 = t('bulletin.actions')
     tbody
-      - current_user.bulletins.each do |bulletin|
+      - @bulletins.each do |bulletin|
         tr.font-weight-bold
 
           td.h4 = link_to bulletin.title, bulletin_path(bulletin)

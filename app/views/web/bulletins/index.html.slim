@@ -12,7 +12,8 @@ h1.text-center = t('bulletin.bulletins')
           .col-md-3
             .form-group
               = f.label :category_id_eq, t('search.category')
-              = f.select :category_id_eq, options_from_collection_for_select(Category.all, :id, :name), { include_blank: true }, class: 'form-control'
+              = f.select :category_id_eq, options_from_collection_for_select(Category.all, :id, :name, selected: params.dig(:q, :category_id_eq)),
+               { include_blank: true }, class: 'form-control'
           .col-md-3
             .form-group.mt-md-4
               = f.submit t('search.find'), class: 'btn btn-primary mt-4 mt-md-0'

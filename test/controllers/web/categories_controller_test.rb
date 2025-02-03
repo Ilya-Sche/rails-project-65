@@ -11,9 +11,4 @@ class Web::CategoriesControllerTest < ActionDispatch::IntegrationTest
     get categories_path
     assert_response :success
   end
-
-  test 'should show category' do
-    get category_path(@category)
-    assert_response :success
-  end
 end

@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include Pundit::Authorization
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   allow_browser versions: :modern
   helper_method :user_signed_in?, :current_user
   before_action :set_locale
@@ -21,5 +24,9 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
+  end
+
+  def user_not_authorized
+    redirect_to root_path, alert: I18n.t('admin.not_auth')
   end
 end

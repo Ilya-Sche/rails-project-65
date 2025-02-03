@@ -25,7 +25,7 @@ class Web::Admin::CategoriesController < ApplicationController
     if @category.save
       redirect_to admin_categories_path, notice: I18n.t('category.created')
     else
-      render :new, unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 

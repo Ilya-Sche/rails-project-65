@@ -2,6 +2,8 @@
 
 class Web::BulletinsController < Web::ApplicationController
   before_action :authenticate_user!, except: %i[index show]
+  before_action :set_bulletin, only: %i[edit update destroy archive send_for_moderation]
+  before_action :authorize_bulletin!, only: %i[edit update destroy archive send_for_moderation]
 
   def index
     @q = Bulletin.ransack(params[:q])
@@ -15,16 +17,20 @@ class Web::BulletinsController < Web::ApplicationController
   end
 
   def show
-    @bulletin = Bulletin.find(params[:id])
+    @bulletin = if current_user
+                  current_user.bulletins.find(params[:id])
+                else
+                  Bulletin.where(state: :published).find(params[:id])
+                end
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path, alert: I18n.t('admin.not_auth')
   end
 
   def new
     @bulletin = Bulletin.new
   end
 
-  def edit
-    @bulletin = Bulletin.find(params[:id])
-  end
+  def edit; end
 
   def create
     @bulletin = current_user.bulletins.build(bulletin_params)
@@ -36,8 +42,6 @@ class Web::BulletinsController < Web::ApplicationController
   end
 
   def update
-    @bulletin = Bulletin.find(params[:id])
-
     if @bulletin.update(bulletin_params)
       redirect_to @bulletin, notice: I18n.t('flash.update', model: @bulletin.class.name)
     else
@@ -46,7 +50,6 @@ class Web::BulletinsController < Web::ApplicationController
   end
 
   def destroy
-    @bulletin = Bulletin.find(params[:id])
     @bulletin.destroy
     return unless @bulletin.destroy
 
@@ -54,7 +57,6 @@ class Web::BulletinsController < Web::ApplicationController
   end
 
   def send_for_moderation
-    @bulletin = Bulletin.find(params[:id])
     if @bulletin.send_for_moderation!
       redirect_to profile_path, notice: I18n.t('flash.moderate', model: @bulletin.class.name)
     else
@@ -63,7 +65,6 @@ class Web::BulletinsController < Web::ApplicationController
   end
 
   def archive
-    @bulletin = Bulletin.find(params[:id])
     if @bulletin.archive!
       redirect_to profile_path, notice: I18n.t('flash.archive', model: @bulletin.class.name)
     else
@@ -79,5 +80,13 @@ class Web::BulletinsController < Web::ApplicationController
 
   def authenticate_user!
     redirect_to root_path, alert: I18n.t('user.auth') unless current_user
+  end
+
+  def set_bulletin
+    @bulletin = Bulletin.find(params[:id])
+  end
+
+  def authorize_bulletin!
+    authorize @bulletin
   end
 end

@@ -16,9 +16,9 @@ Rails.application.routes.draw do
   get 'service-worker' => 'rails/pwa#service_worker', as: :pwa_service_worker
   get 'manifest' => 'rails/pwa#manifest', as: :pwa_manifest
 
-  scope :web do
-    resources :categories, only: %i[index show], controller: 'web/categories'
-    resources :bulletins, controller: 'web/bulletins' do
+  scope module: 'web' do
+    resources :categories, only: %i[index], controller: 'categories'
+    resources :bulletins, controller: 'bulletins' do
       member do
         post :send_for_moderation
         patch :archive

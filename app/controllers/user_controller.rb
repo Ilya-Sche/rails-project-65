@@ -5,9 +5,13 @@ class UserController < ApplicationController
 
   def show
     authenticate_user!
-    @bulletins = current_user.bulletins.page(params[:page]).per(10)
     @q = Bulletin.ransack(params[:q])
-    @bulletins = @q.result(distinct: true).page(params[:page]).per(10)
+
+    @bulletins = current_user.bulletins
+                             .ransack(params[:q])
+                             .result
+                             .order(created_at: :desc)
+                             .page(params[:page]).per(10)
   end
 
   def create
@@ -17,7 +21,7 @@ class UserController < ApplicationController
 
     if @user.persisted?
       session[:user_id] = @user.id
-      redirect_to root_path, notice: I18n.t('user.entered')
+      redirect_to profile_path, notice: I18n.t('user.entered')
     else
       redirect_to root_path, alert: I18n.t('user.auth')
     end

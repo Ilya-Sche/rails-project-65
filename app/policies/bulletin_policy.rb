@@ -28,4 +28,12 @@ class BulletinPolicy < ApplicationPolicy
   def destroy?
     user.admin? || bulletin.user == user
   end
+
+  def archive?
+    user.admin? || bulletin.user == user
+  end
+
+  def send_for_moderation?
+    bulletin.user == user
+  end
 end
