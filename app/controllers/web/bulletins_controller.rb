@@ -18,7 +18,11 @@ class Web::BulletinsController < Web::ApplicationController
 
   def show
     @bulletin = if current_user
-                  current_user.bulletins.find(params[:id])
+                  if current_user.id == Bulletin.find(params[:id]).user_id
+                    current_user.bulletins.find(params[:id])
+                  else
+                    Bulletin.where(state: :published).find(params[:id])
+                  end
                 else
                   Bulletin.where(state: :published).find(params[:id])
                 end
