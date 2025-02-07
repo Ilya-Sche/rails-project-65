@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class Web::BulletinsController < Web::ApplicationController
-  before_action :set_bulletin, only: %i[send_for_moderation archive update destroy edit]
   before_action :authenticate_user!, except: %i[index show]
-  before_action :authorize_bulletin!, only: %i[edit update destroy archive send_for_moderation]
 
   def index
     @q = Bulletin.ransack(params[:q])
@@ -38,6 +36,9 @@ class Web::BulletinsController < Web::ApplicationController
   end
 
   def update
+    @bulletin = Bulletin.find(params[:id])
+    authorize @bulletin
+
     if @bulletin.update(bulletin_params)
       redirect_to @bulletin, notice: I18n.t('flash.update', model: @bulletin.class.name)
     else
@@ -46,12 +47,18 @@ class Web::BulletinsController < Web::ApplicationController
   end
 
   def destroy
+    @bulletin = Bulletin.find(params[:id])
+    authorize @bulletin
+
     @bulletin.destroy
 
     redirect_to bulletins_path, notice: I18n.t('flash.destroy', model: @bulletin.class.name)
   end
 
   def send_for_moderation
+    @bulletin = Bulletin.find(params[:id])
+    authorize @bulletin
+
     @bulletin.send_for_moderation
     if @bulletin.save
       redirect_to profile_path, notice: I18n.t('flash.moderate', model: @bulletin.class.name)
@@ -61,6 +68,9 @@ class Web::BulletinsController < Web::ApplicationController
   end
 
   def archive
+    @bulletin = Bulletin.find(params[:id])
+    authorize @bulletin
+
     @bulletin.archive
     if @bulletin.save
       redirect_to profile_path, notice: I18n.t('flash.archive', model: @bulletin.class.name)
@@ -77,9 +87,5 @@ class Web::BulletinsController < Web::ApplicationController
 
   def bulletin_params
     params.require(:bulletin).permit(:title, :description, :category_id, :image)
-  end
-
-  def authorize_bulletin!
-    authorize @bulletin
   end
 end

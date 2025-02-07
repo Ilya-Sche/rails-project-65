@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
 class Web::Admin::BulletinsController < Web::Admin::ApplicationController
-  before_action :authorize_admin
-  before_action :set_bulletin, only: %i[reject archive publish]
-
-  def admin; end
-
   def moderation
     @bulletins = Bulletin.includes(:category, :user).under_moderation.order(created_at: :desc)
   end
@@ -25,6 +20,9 @@ class Web::Admin::BulletinsController < Web::Admin::ApplicationController
   end
 
   def publish
+    @bulletin = Bulletin.find(params[:id])
+    authorize @bulletin
+
     @bulletin.publish
     if @bulletin.save
       redirect_to admin_bulletins_path, notice: I18n.t('flash.publish', model: @bulletin.class.name)
@@ -34,6 +32,9 @@ class Web::Admin::BulletinsController < Web::Admin::ApplicationController
   end
 
   def reject
+    @bulletin = Bulletin.find(params[:id])
+    authorize @bulletin
+
     @bulletin.reject
     if @bulletin.save
       redirect_to admin_bulletins_path, notice: I18n.t('flash.reject', model: @bulletin.class.name)
@@ -43,6 +44,9 @@ class Web::Admin::BulletinsController < Web::Admin::ApplicationController
   end
 
   def archive
+    @bulletin = Bulletin.find(params[:id])
+    authorize @bulletin
+
     @bulletin.archive
     if @bulletin.save
       redirect_to admin_bulletins_path, notice: I18n.t('flash.archive', model: @bulletin.class.name)
@@ -59,9 +63,5 @@ class Web::Admin::BulletinsController < Web::Admin::ApplicationController
 
   def bulletin_params
     params.require(:bulletin).permit(:title, :description, :category_id, :image)
-  end
-
-  def authorize_admin
-    redirect_to root_path, alert: I18n.t('admin.not_auth') unless current_user&.admin?
   end
 end
