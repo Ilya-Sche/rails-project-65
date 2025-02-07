@@ -33,21 +33,6 @@ class Web::Admin::BulletinsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'should get edit' do
-    get edit_admin_bulletin_path(@bulletin)
-    assert_response :success
-  end
-
-  test 'should update bulletin' do
-    patch admin_bulletin_path(@bulletin), params: { bulletin: { title: 'Updated title' } }
-    assert_redirected_to admin_bulletins_path
-  end
-
-  test 'should not update bulletin with invalid data' do
-    patch admin_bulletin_path(@bulletin), params: { bulletin: { title: '' } }
-    assert_response :unprocessable_entity
-  end
-
   test 'should publish bulletin' do
     patch publish_admin_bulletin_path(@bulletin_two)
     @bulletin_two.reload

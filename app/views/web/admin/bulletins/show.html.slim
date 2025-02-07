@@ -20,6 +20,4 @@ p
   strong Статус:
   = @bulletin.state.humanize
 
-= link_to t('bulletin.edit'), edit_admin_bulletin_path(@bulletin), class: 'btn btn-warning'
-p
 = link_to t('bulletin.back'), admin_bulletins_path, class: 'btn btn-secondary'

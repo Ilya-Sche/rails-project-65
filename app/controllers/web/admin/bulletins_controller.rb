@@ -24,19 +24,6 @@ class Web::Admin::BulletinsController < Web::Admin::ApplicationController
     @bulletin = Bulletin.find(params[:id])
   end
 
-  def edit
-    @bulletin = Bulletin.find(params[:id])
-  end
-
-  def update
-    @bulletin = Bulletin.find(params[:id])
-    if @bulletin.update(bulletin_params)
-      redirect_to admin_bulletins_path, notice: I18n.t('flash.update', model: @bulletin.class.name)
-    else
-      render :edit, status: :unprocessable_entity
-    end
-  end
-
   def publish
     @bulletin.publish
     if @bulletin.save
