@@ -17,7 +17,7 @@ p
     = image_tag @bulletin.image, alt: 'Bulletin Image', class: 'img-fluid', style: 'max-width: 600px;'
 
 p
-  strong Статус:
+  strong = "#{t('bulletin.state')} :"
   = @bulletin.state.humanize
 
 = link_to t('bulletin.back'), admin_bulletins_path, class: 'btn btn-secondary'
