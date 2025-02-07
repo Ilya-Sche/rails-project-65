@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Web::BulletinsController < Web::ApplicationController
-  before_action :set_bulletin, only: %i[send_for_moderation archive update destroy]
+  before_action :set_bulletin, only: %i[send_for_moderation archive update destroy edit]
   before_action :authenticate_user!, except: %i[index show]
   before_action :authorize_bulletin!, only: %i[edit update destroy archive send_for_moderation]
 
