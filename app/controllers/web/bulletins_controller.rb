@@ -24,7 +24,9 @@ class Web::BulletinsController < Web::ApplicationController
     @bulletin = Bulletin.new
   end
 
-  def edit; end
+  def edit
+    @bulletin = Bulletin.find(params[:id])
+  end
 
   def create
     @bulletin = current_user.bulletins.build(bulletin_params)
