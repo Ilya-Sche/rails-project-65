@@ -26,9 +26,7 @@ class Web::BulletinsController < Web::ApplicationController
     @bulletin = Bulletin.new
   end
 
-  def edit
-    @bulletin = Bulletin.find(params[:id])
-  end
+  def edit; end
 
   def create
     @bulletin = current_user.bulletins.build(bulletin_params)
@@ -40,8 +38,6 @@ class Web::BulletinsController < Web::ApplicationController
   end
 
   def update
-    @bulletin = Bulletin.find(params[:id])
-
     if @bulletin.update(bulletin_params)
       redirect_to @bulletin, notice: I18n.t('flash.update', model: @bulletin.class.name)
     else
@@ -50,7 +46,6 @@ class Web::BulletinsController < Web::ApplicationController
   end
 
   def destroy
-    @bulletin = Bulletin.find(params[:id])
     @bulletin.destroy
 
     redirect_to bulletins_path, notice: I18n.t('flash.destroy', model: @bulletin.class.name)
