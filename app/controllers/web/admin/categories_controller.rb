@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-class Web::Admin::CategoriesController < ApplicationController
-  before_action :authorize_admin
-
+class Web::Admin::CategoriesController < Web::Admin::ApplicationController
   def index
     @categories = Category.all
   end
@@ -52,9 +50,5 @@ class Web::Admin::CategoriesController < ApplicationController
 
   def category_params
     params.require(:category).permit(:name)
-  end
-
-  def authorize_admin
-    redirect_to root_path, alert: I18n.t('admin.not_auth') unless current_user&.user_admin?
   end
 end

@@ -78,7 +78,7 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
   test 'should send bulletin for moderation' do
     sign_in(@user)
 
-    post send_for_moderation_bulletin_url(@bulletin)
+    patch send_for_moderation_bulletin_url(@bulletin)
     @bulletin.reload
     assert_equal 'under_moderation', @bulletin.state
   end

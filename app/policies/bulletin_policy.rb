@@ -10,8 +10,12 @@ class BulletinPolicy < ApplicationPolicy
   end
 
   def show?
-    true
+    return true if bulletin.user_id == user.id
+
+    buletin.state == 'published'
   end
+
+  delegate :admin?, to: :user
 
   def edit?
     bulletin.user == user
@@ -26,7 +30,15 @@ class BulletinPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.admin? || bulletin.user == user
+    bulletin.user == user
+  end
+
+  def reject?
+    user.admin?
+  end
+
+  def publish?
+    user.admin?
   end
 
   def archive?

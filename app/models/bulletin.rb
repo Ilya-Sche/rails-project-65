@@ -8,8 +8,7 @@ class Bulletin < ApplicationRecord
 
   validates :title, presence: true, length: { maximum: 50 }
   validates :description, presence: true, length: { maximum: 1000 }
-  validates :image, presence: true
-  validate :image_size
+  validates :image, size: { less_than: 5.megabytes }, content_type: ['image/png', 'image/jpeg'], presence: true
 
   has_one_attached :image
 
@@ -43,13 +42,5 @@ class Bulletin < ApplicationRecord
 
   def self.ransackable_associations(_auth_object = nil)
     ['category']
-  end
-
-  private
-
-  def image_size
-    return unless image.attached? && image.blob.byte_size > 5.megabytes
-
-    errors.add(:image, 'Each image should be less than 5MB')
   end
 end

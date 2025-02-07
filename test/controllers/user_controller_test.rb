@@ -19,12 +19,4 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
     assert_equal flash[:alert], I18n.t('user.auth')
   end
-
-  test 'should create user' do
-    assert_difference 'User.count', 1 do
-      post users_url, params: { user: { email: 'newuser@example.com', name: 'New User' } }
-    end
-    assert_redirected_to profile_path
-    assert_equal flash[:notice], I18n.t('user.entered')
-  end
 end

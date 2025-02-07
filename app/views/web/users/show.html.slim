@@ -40,7 +40,7 @@ h1.text-center = t('bulletin.bulletins')
           td
             = link_to t('bulletin.show'), bulletin_path(bulletin), class: 'btn btn-info'
             - if bulletin.state == 'draft'
-              = button_to t('button.moderate'), send_for_moderation_bulletin_path(bulletin), method: :post, class: 'btn btn-warning'
+              = button_to t('button.moderate'), send_for_moderation_bulletin_path(bulletin), method: :patch, class: 'btn btn-warning'
               = button_to t('button.archive'), archive_bulletin_path(bulletin), method: :patch, data: { turbo_confirm: t('destroy.confirm') }, class: 'btn btn-danger'
             - if bulletin.state == 'published'
               = button_to t('button.archive'), archive_bulletin_path(bulletin), method: :patch, data: { turbo_confirm: t('destroy.confirm') }, class: 'btn btn-secondary'

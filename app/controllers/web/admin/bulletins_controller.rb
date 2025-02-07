@@ -1,15 +1,13 @@
 # frozen_string_literal: true
 
-class Web::Admin::BulletinsController < ApplicationController
-  before_action :authenticate_user!
+class Web::Admin::BulletinsController < Web::Admin::ApplicationController
   before_action :authorize_admin
+  before_action :set_bulletin, only: %i[reject archive publish]
 
-  def admin
-    @bulletins = Bulletin.includes(:category, :user).order(created_at: :desc)
-  end
+  def admin; end
 
   def moderation
-    @bulletins = Bulletin.includes(:category, :user).where(state: :under_moderation).order(created_at: :desc)
+    @bulletins = Bulletin.includes(:category, :user).under_moderation.order(created_at: :desc)
   end
 
   def index
@@ -39,15 +37,9 @@ class Web::Admin::BulletinsController < ApplicationController
     end
   end
 
-  def destroy
-    @bulletin = Bulletin.find(params[:id])
-    @bulletin.destroy
-    redirect_to admin_bulletins_path, notice: I18n.t('flash.destroy', model: @bulletin.class.name)
-  end
-
   def publish
-    @bulletin = Bulletin.find(params[:id])
-    if @bulletin.publish!
+    @bulletin.publish
+    if @bulletin.save
       redirect_to admin_bulletins_path, notice: I18n.t('flash.publish', model: @bulletin.class.name)
     else
       redirect_to admin_bulletins_path, alert: I18n.t('flash.error')
@@ -55,8 +47,8 @@ class Web::Admin::BulletinsController < ApplicationController
   end
 
   def reject
-    @bulletin = Bulletin.find(params[:id])
-    if @bulletin.reject!
+    @bulletin.reject
+    if @bulletin.save
       redirect_to admin_bulletins_path, notice: I18n.t('flash.reject', model: @bulletin.class.name)
     else
       redirect_to admin_bulletins_path, alert: I18n.t('flash.error')
@@ -64,8 +56,8 @@ class Web::Admin::BulletinsController < ApplicationController
   end
 
   def archive
-    @bulletin = Bulletin.find(params[:id])
-    if @bulletin.archive!
+    @bulletin.archive
+    if @bulletin.save
       redirect_to admin_bulletins_path, notice: I18n.t('flash.archive', model: @bulletin.class.name)
     else
       redirect_to admin_bulletins_path, alert: I18n.t('flash.error')
@@ -74,15 +66,15 @@ class Web::Admin::BulletinsController < ApplicationController
 
   private
 
-  def bulletin_params
-    params.require(:bulletin).permit(:title, :description, :category_id, :state, :image)
+  def set_bulletin
+    @bulletin = Bulletin.find(params[:id])
   end
 
-  def authenticate_user!
-    redirect_to root_path, alert: I18n.t('user.auth') unless current_user
+  def bulletin_params
+    params.require(:bulletin).permit(:title, :description, :category_id, :image)
   end
 
   def authorize_admin
-    redirect_to root_path, alert: I18n.t('admin.not_auth') unless current_user&.user_admin?
+    redirect_to root_path, alert: I18n.t('admin.not_auth') unless current_user&.admin?
   end
 end

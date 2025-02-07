@@ -1,39 +1,28 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root 'web/bulletins#index'
-
-  scope module: 'web' do
-    post 'auth/:provider', to: 'auth#request', as: :auth_request
-    get 'auth/:provider/callback', to: 'auth#callback', as: :callback_auth
-    get '/logout', to: 'auth#destroy', as: 'logout'
-  end
-
   get 'up' => 'rails/health#show', as: :rails_health_check
-  get 'profile', to: 'user#show'
-  get 'admin', to: 'web/admin/bulletins#admin'
 
   get 'service-worker' => 'rails/pwa#service_worker', as: :pwa_service_worker
   get 'manifest' => 'rails/pwa#manifest', as: :pwa_manifest
 
   scope module: 'web' do
-    resources :categories, only: %i[index], controller: 'categories'
-    resources :bulletins, controller: 'bulletins' do
+    root 'bulletins#index'
+    post 'auth/:provider', to: 'auth#request', as: :auth_request
+    get 'auth/:provider/callback', to: 'auth#callback', as: :callback_auth
+    get '/logout', to: 'auth#destroy', as: 'logout'
+    resource :profile, controller: 'users', action: 'show', as: 'profile'
+    resources :bulletins do
       member do
-        post :send_for_moderation
+        patch :send_for_moderation
         patch :archive
       end
     end
-  end
-
-  resources :users, controller: 'user'
-
-  scope module: 'web' do
     namespace :admin do
+      get '/', to: 'bulletins#admin'
       resources :categories
-      resources :bulletins do
+      resources :bulletins, except: %i[create destroy] do
         member do
-          post :send_for_moderation
           patch :publish
           patch :reject
           patch :archive

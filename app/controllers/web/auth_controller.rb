@@ -18,20 +18,23 @@ class Web::AuthController < Web::ApplicationController
     redirect_to root_path, notice: I18n.t('user.logged_out')
   end
 
+  private
+
   def find_or_initialize_user(auth)
     user = User.find_or_initialize_by(email: auth[:info][:email].downcase)
 
-    return user if user.persisted?
-
-    user.assign_attributes(build_auth_user_params(auth))
+    if user
+      user.update(build_auth_user_params(auth))
+    else
+      user = User.new(build_auth_user_params(auth))
+    end
 
     user
   end
 
   def build_auth_user_params(auth)
     {
-      name: auth['info']['name'],
-      email: auth['info']['email']
+      name: auth['info']['name']
     }
   end
 end

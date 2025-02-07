@@ -7,6 +7,7 @@ class Web::Admin::BulletinsControllerTest < ActionDispatch::IntegrationTest
     @user = users(:admin)
     @bulletin = bulletins(:one)
     @bulletin_two = bulletins(:two)
+    @image = fixture_file_upload(Rails.root.join('test/fixtures/files/example_image.jpg'), 'image/jpeg')
     @bulletin.image.attach(io: Rails.root.join('test/fixtures/files/example_image.jpg').open, filename: 'example_image.jpg')
     @bulletin_two.image.attach(io: Rails.root.join('test/fixtures/files/example_image.jpg').open, filename: 'example_image.jpg')
     sign_in @user
@@ -45,13 +46,6 @@ class Web::Admin::BulletinsControllerTest < ActionDispatch::IntegrationTest
   test 'should not update bulletin with invalid data' do
     patch admin_bulletin_path(@bulletin), params: { bulletin: { title: '' } }
     assert_response :unprocessable_entity
-  end
-
-  test 'should destroy bulletin' do
-    assert_difference('Bulletin.count', -1) do
-      delete admin_bulletin_path(@bulletin)
-    end
-    assert_redirected_to admin_bulletins_path
   end
 
   test 'should publish bulletin' do

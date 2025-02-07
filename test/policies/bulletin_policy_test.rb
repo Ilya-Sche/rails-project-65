@@ -31,12 +31,4 @@ class BulletinPolicyTest < ActiveSupport::TestCase
     assert BulletinPolicy.new(@user, @bulletin).update?
     assert_not BulletinPolicy.new(@user, @other_bulletin).update?
   end
-
-  def test_destroy
-    assert BulletinPolicy.new(@admin, @bulletin).destroy?
-    assert BulletinPolicy.new(@admin, @other_bulletin).destroy?
-
-    assert BulletinPolicy.new(@user, @bulletin).destroy?
-    assert_not BulletinPolicy.new(@user, @other_bulletin).destroy?
-  end
 end
