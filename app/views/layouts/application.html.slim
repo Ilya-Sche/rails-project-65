@@ -2,12 +2,10 @@ doctype html
 html
   head
     title
-      = content_for(:title) || 'Rails Project 65'
     meta[name='viewport' content='width=device-width,initial-scale=1']
     meta[name='apple-mobile-web-app-capable' content='yes']
     = csrf_meta_tags
     = csp_meta_tag
-    = yield :head
     link[rel='manifest' href='/manifest.json']
     link[rel='icon' href='/icon.png' type='image/png']
     link[rel='icon' href='/icon.svg' type='image/svg+xml']
@@ -33,7 +31,7 @@ html
           - if current_user&.admin?
             = link_to t('user.admin'), admin_path, class: 'navbar-brand text-primary text-decoration-none'
 
-          - if session[:user_id]
+          - if user_signed_in?
             = link_to t('user.profile'), profile_path, class: 'navbar-brand text-primary text-decoration-none'
             = link_to t('user.logout'), logout_path, method: :delete, class: 'navbar-brand text-primary text-decoration-none'
             .ms-auto.d-flex.align-items-center

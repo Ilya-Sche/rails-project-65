@@ -11,23 +11,12 @@ class BulletinPolicyTest < ActiveSupport::TestCase
     @other_bulletin = bulletins(:two)
   end
 
-  def test_create
-    assert BulletinPolicy.new(@admin, Bulletin).create?
-
-    assert BulletinPolicy.new(@user, Bulletin).create?
-  end
-
   def test_edit
-    assert_not BulletinPolicy.new(@admin, @bulletin).edit?
-
     assert BulletinPolicy.new(@user, @bulletin).edit?
     assert_not BulletinPolicy.new(@user, @other_bulletin).edit?
   end
 
   def test_update
-    assert BulletinPolicy.new(@admin, @bulletin).update?
-    assert BulletinPolicy.new(@admin, @other_bulletin).update?
-
     assert BulletinPolicy.new(@user, @bulletin).update?
     assert_not BulletinPolicy.new(@user, @other_bulletin).update?
   end

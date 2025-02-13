@@ -21,7 +21,6 @@ class Web::Admin::BulletinsController < Web::Admin::ApplicationController
 
   def publish
     @bulletin = Bulletin.find(params[:id])
-    authorize @bulletin
 
     @bulletin.publish
     if @bulletin.save
@@ -33,7 +32,6 @@ class Web::Admin::BulletinsController < Web::Admin::ApplicationController
 
   def reject
     @bulletin = Bulletin.find(params[:id])
-    authorize @bulletin
 
     @bulletin.reject
     if @bulletin.save
@@ -45,7 +43,6 @@ class Web::Admin::BulletinsController < Web::Admin::ApplicationController
 
   def archive
     @bulletin = Bulletin.find(params[:id])
-    authorize @bulletin
 
     @bulletin.archive
     if @bulletin.save
@@ -59,9 +56,5 @@ class Web::Admin::BulletinsController < Web::Admin::ApplicationController
 
   def set_bulletin
     @bulletin = Bulletin.find(params[:id])
-  end
-
-  def bulletin_params
-    params.require(:bulletin).permit(:title, :description, :category_id, :image)
   end
 end

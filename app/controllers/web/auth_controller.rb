@@ -22,19 +22,8 @@ class Web::AuthController < Web::ApplicationController
 
   def find_or_initialize_user(auth)
     user = User.find_or_initialize_by(email: auth[:info][:email].downcase)
-
-    if user
-      user.update(build_auth_user_params(auth))
-    else
-      user = User.new(build_auth_user_params(auth))
-    end
-
+    user.name = auth[:info][:name]
+    user.save
     user
-  end
-
-  def build_auth_user_params(auth)
-    {
-      name: auth['info']['name']
-    }
   end
 end

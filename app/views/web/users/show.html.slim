@@ -39,13 +39,10 @@ h1.text-center = t('bulletin.bulletins')
           td.h4 = bulletin.state.humanize
           td
             = link_to t('bulletin.show'), bulletin_path(bulletin), class: 'btn btn-info'
-            - if bulletin.state == 'draft'
-              = button_to t('button.moderate'), send_for_moderation_bulletin_path(bulletin), method: :patch, class: 'btn btn-warning'
-              = button_to t('button.archive'), archive_bulletin_path(bulletin), method: :patch, data: { turbo_confirm: t('destroy.confirm') }, class: 'btn btn-danger'
-            - if bulletin.state == 'published'
-              = button_to t('button.archive'), archive_bulletin_path(bulletin), method: :patch, data: { turbo_confirm: t('destroy.confirm') }, class: 'btn btn-secondary'
-            - if bulletin.state == 'rejected'
-              = button_to t('button.archive'), archive_bulletin_path(bulletin), method: :patch, data: { turbo_confirm: t('destroy.confirm') }, class: 'btn btn-secondary'
+            - if bulletin.may_send_for_moderation?
+              = link_to t('button.moderate'), send_for_moderation_bulletin_path(bulletin), data: { turbo_method: :patch }, class: 'btn btn-warning'
+            - if bulletin.may_archive?
+              = link_to t('button.archive'), archive_bulletin_path(bulletin), data: { turbo_method: :patch, turbo_confirm: t('destroy.confirm') }, class: 'btn btn-danger'
 .pagination-wrapper
   .pagination
     = paginate @bulletins

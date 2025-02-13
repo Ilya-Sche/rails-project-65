@@ -4,7 +4,6 @@ class Web::ApplicationController < ApplicationController
   include AuthManager
   include Pundit::Authorization
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
-  allow_browser versions: :modern
   helper_method :user_signed_in?, :current_user
 
   def authenticate_user!

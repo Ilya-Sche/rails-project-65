@@ -20,11 +20,18 @@ class Web::Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'should get new' do
+    get new_admin_category_path
+    assert_response :success
+    assert_select 'form'
+  end
+
   test 'should create category' do
     assert_difference('Category.count', 1) do
       post admin_categories_path, params: { category: { name: 'New Category' } }
     end
     assert_redirected_to admin_categories_path
+    assert_equal 'New Category', Category.last.name
   end
 
   test 'should get edit' do
@@ -35,6 +42,8 @@ class Web::Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
   test 'should update category' do
     patch admin_category_path(@category), params: { category: { name: 'Updated Name' } }
     assert_redirected_to admin_categories_path
+    @category.reload
+    assert_equal 'Updated Name', @category.name
   end
 
   test 'should not update category with invalid data' do

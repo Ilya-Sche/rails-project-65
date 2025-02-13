@@ -36,6 +36,6 @@ h1.text-center = t('bulletin.bulletins')
   .pagination-wrapper
     .pagination
       = paginate @bulletins
-- elsif @q.title_cont.present? || @q.description_cont.present?
+- elsif @q.title_cont.present? || @q.category_id_eq.present?
   .alert.alert-warning
     strong = t('bulletin.not_found')

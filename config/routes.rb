@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     namespace :admin do
       get '/', to: 'bulletins#admin'
       resources :categories
-      resources :bulletins, except: %i[create destroy] do
+      resources :bulletins, only: %i[index show] do
         member do
           patch :publish
           patch :reject

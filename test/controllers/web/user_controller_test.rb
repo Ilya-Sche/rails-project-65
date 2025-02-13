@@ -2,10 +2,9 @@
 
 require 'test_helper'
 
-class UsersControllerTest < ActionDispatch::IntegrationTest
+class Web::UsersControllerTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:one)
-    @other_user = users(:two)
   end
 
   test 'should get show for logged-in user' do

@@ -8,7 +8,6 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
     @category = categories(:one)
     @bulletin = bulletins(:one)
     @image = fixture_file_upload(Rails.root.join('test/fixtures/files/example_image.jpg'), 'image/jpeg')
-    @bulletin.image.attach(io: Rails.root.join('test/fixtures/files/example_image.jpg').open, filename: 'example_image.jpg')
   end
 
   test 'should get index' do
@@ -19,7 +18,7 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
   test 'should show bulletin' do
     sign_in(@user)
 
-    get bulletin_url(@user, @bulletin)
+    get bulletin_url(@bulletin)
     assert_response :success
     assert_select 'h1', @bulletin.title
   end
@@ -32,13 +31,26 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
     assert_select 'form'
   end
 
+  test 'should get edit' do
+    sign_in(@user)
+
+    get edit_bulletin_url(@bulletin)
+    assert_response :success
+  end
+
   test 'should create bulletin with valid params' do
     sign_in(@user)
 
     assert_difference('Bulletin.count', 1) do
-      post bulletins_url, params: { bulletin: { title: 'New Bulletin', description: 'Description', category_id: @category.id, state: 'draft', image: @image } }
+      post bulletins_url, params: { bulletin: { title: 'New Bulletin', description: 'Description', category_id: @category.id, image: @image } }
     end
     assert_redirected_to bulletin_url(Bulletin.last)
+    bulletin = Bulletin.last
+
+    assert_equal 'New Bulletin', bulletin.title
+    assert_equal 'Description', bulletin.description
+    assert_equal @category.id, bulletin.category_id
+    assert_equal @user, bulletin.user
   end
 
   test 'should not create bulletin with invalid params' do

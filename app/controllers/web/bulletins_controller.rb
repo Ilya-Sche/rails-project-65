@@ -16,8 +16,7 @@ class Web::BulletinsController < Web::ApplicationController
 
   def show
     @bulletin = Bulletin.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    redirect_to root_path, alert: I18n.t('admin.not_auth')
+    authorize @bulletin
   end
 
   def new
@@ -26,6 +25,7 @@ class Web::BulletinsController < Web::ApplicationController
 
   def edit
     @bulletin = Bulletin.find(params[:id])
+    authorize @bulletin
   end
 
   def create

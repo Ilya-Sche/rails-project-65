@@ -3,7 +3,7 @@
     - category.errors.full_messages.each do |message|
       li = message
 
-= form_with(model: category, url: category.persisted? ? admin_category_path(category) : admin_categories_path, local: true) do |form|
+= form_with(model: category, url: category.persisted? ? admin_category_path(category) : admin_categories_path) do |form|
 
   .form-group
     = form.text_field :name, class: 'form-control', placeholder: t('category.name')

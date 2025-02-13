@@ -7,9 +7,7 @@ class Web::Admin::BulletinsControllerTest < ActionDispatch::IntegrationTest
     @user = users(:admin)
     @bulletin = bulletins(:one)
     @bulletin_two = bulletins(:two)
-    @image = fixture_file_upload(Rails.root.join('test/fixtures/files/example_image.jpg'), 'image/jpeg')
-    @bulletin.image.attach(io: Rails.root.join('test/fixtures/files/example_image.jpg').open, filename: 'example_image.jpg')
-    @bulletin_two.image.attach(io: Rails.root.join('test/fixtures/files/example_image.jpg').open, filename: 'example_image.jpg')
+
     sign_in @user
   end
 

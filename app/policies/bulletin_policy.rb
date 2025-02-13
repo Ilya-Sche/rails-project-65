@@ -10,9 +10,9 @@ class BulletinPolicy < ApplicationPolicy
   end
 
   def show?
-    return true if bulletin.user_id == user.id
+    return true if user && bulletin.user_id == user.id
 
-    buletin.state == 'published'
+    bulletin.published?
   end
 
   delegate :admin?, to: :user
@@ -21,28 +21,16 @@ class BulletinPolicy < ApplicationPolicy
     bulletin.user == user
   end
 
-  def create?
-    user.present?
-  end
-
   def update?
-    user.admin? || bulletin.user == user
+    bulletin.user == user
   end
 
   def destroy?
     bulletin.user == user
   end
 
-  def reject?
-    user.admin?
-  end
-
-  def publish?
-    user.admin?
-  end
-
   def archive?
-    user.admin? || bulletin.user == user
+    bulletin.user == user
   end
 
   def send_for_moderation?
