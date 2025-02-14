@@ -15,8 +15,6 @@ class BulletinPolicy < ApplicationPolicy
     bulletin.published?
   end
 
-  delegate :admin?, to: :user
-
   def edit?
     bulletin.user == user
   end

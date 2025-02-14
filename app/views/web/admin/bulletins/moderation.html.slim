@@ -17,6 +17,6 @@ p
     .col-md-4
       small.text-muted = "#{time_ago_in_words(bulletin.created_at)} ago"
     .col-md-4
-      = button_to t('button.publish'), publish_admin_bulletin_path(bulletin), method: :patch, class: 'btn btn-success btn-sm'
-      = button_to t('button.reject'), reject_admin_bulletin_path(bulletin), method: :patch, class: 'btn btn-danger btn-sm'
-      = button_to t('button.archive'), archive_admin_bulletin_path(bulletin), method: :patch, class: 'btn btn-secondary btn-sm'
+      = link_to t('button.publish'), publish_admin_bulletin_path(bulletin), data: { turbo_method: :patch }, class: 'btn btn-success btn-sm'
+      = link_to t('button.reject'), reject_admin_bulletin_path(bulletin), data: { turbo_method: :patch }, class: 'btn btn-danger btn-sm'
+      = link_to t('button.archive'), archive_admin_bulletin_path(bulletin), data: { turbo_method: :patch }, class: 'btn btn-secondary btn-sm'
