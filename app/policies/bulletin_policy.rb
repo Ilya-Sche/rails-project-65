@@ -35,3 +35,4 @@ class BulletinPolicy < ApplicationPolicy
     bulletin.user == user
   end
 end
+  
